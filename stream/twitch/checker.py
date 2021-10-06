@@ -23,6 +23,7 @@ class Checker:
                 if sub.status == subs.OFFLINE:
                     sub.status = subs.ONLINE
                     sub.offline_count = OFFLINE_DELAY
+                    print(sub.guild)
                     channel = self.client.get_guild(sub.guild).get_channel(sub.channel)
                     title = stream['title']
                     everyone = '@everyone\n' if sub.everyone else ''
