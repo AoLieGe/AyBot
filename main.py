@@ -22,7 +22,7 @@ subs = SubscriptionList()
 sub_provider = SubscriptionProvider(subs)
 sub_provider.load()
 
-subs.add('heyayvaz', AYGUILD, AYCHANNEL, True)  #temp solution
+#subs.add('heyayvaz', AYGUILD, AYCHANNEL, True)  #temp solution
 
 stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
 
