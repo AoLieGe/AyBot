@@ -22,6 +22,7 @@ subs = SubscriptionList()
 sub_provider = SubscriptionProvider(subs)
 sub_provider.load()
 
+subs.add('heyayvaz', int(AYGUILD), int(AYCHANNEL), True)  #temp solution
 
 
 stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
@@ -35,8 +36,7 @@ cmd.add_parser(StreamCmd(sub_provider))
 async def on_ready():
     print('Logged on as {0}!'.format(discord_client.user))
     stream_checker.check.start()
-    subs.add('heyayvaz', AYGUILD, AYCHANNEL, True)  #temp solution
-
+    
 
 @discord_client.event
 async def on_message(message):
