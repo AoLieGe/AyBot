@@ -24,7 +24,7 @@ sub_provider.load()
 
 subs.add('heyayvaz', AYGUILD, AYCHANNEL, True)  #temp solution
 
-stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, sub_provider)
+stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
 
 cmd = CmdParser()
 cmd.add_parser(AoeCmd())
