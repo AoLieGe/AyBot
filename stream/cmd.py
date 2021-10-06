@@ -16,6 +16,8 @@ class StreamCmd(CmdContainer):
         subs = self.provider.subs
 
         if subs.add(name, self.msg.guild.id, self.msg.channel.id, True if 'everyone' in params else False):
+            print(self.msg.guild.id)
+            print(self.msg.channel.id)
             self.provider.save()
             print('success')
         else:
