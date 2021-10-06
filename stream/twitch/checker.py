@@ -12,7 +12,7 @@ class Checker:
         self.client = discord_client
 
     @tasks.loop(seconds=60)
-    async def check(self, ):
+    async def check(self):
         print('=========Tick=========')
         subs = self.provider.subs
         for sub in subs.data:

@@ -34,7 +34,7 @@ cmd.add_parser(StreamCmd(sub_provider))
 @discord_client.event
 async def on_ready():
     print('Logged on as {0}!'.format(discord_client.user))
-    stream_checker.check.start(discord_client)
+    stream_checker.check.start()
 
 
 @discord_client.event
