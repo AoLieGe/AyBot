@@ -6,6 +6,7 @@ from stream.twitch.checker import Checker
 from stream.cmd import StreamCmd
 from commands.parser import CmdParser
 from aoe.cmd import AoeCmd
+from stats.cmd import StatsCmd
 
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
@@ -30,6 +31,7 @@ stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
 cmd = CmdParser()
 cmd.add_parser(AoeCmd())
 cmd.add_parser(StreamCmd(sub_provider))
+cmd.add_parser(StatsCmd())
 
 
 @discord_client.event
