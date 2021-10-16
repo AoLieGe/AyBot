@@ -51,6 +51,7 @@ class StatsCmd(CmdContainer):
         for players in commands:
             cmd = []
             for player in players:
+                print(player)
                 cmd.append(self.rank(player))
             res.append('\n'.join(cmd))
 
