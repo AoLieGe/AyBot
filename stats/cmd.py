@@ -34,7 +34,6 @@ class StatsCmd(CmdContainer):
             tg = tg_rating[1]
 
         res = f"{name} S:{solo} TG:{tg}"
-        print(res)
         return res
 
     def match(self, params):
@@ -44,15 +43,13 @@ class StatsCmd(CmdContainer):
         match_resp = requests.get(match_url)
 
         commands = AOE2netParser.match(match_resp.text)
-        print(commands)
 
         res = []
 
         for players in commands:
             cmd = []
             for player in players:
-                print(player)
-                cmd.append(self.rank(player))
+                cmd.append(self.rank([player]))
             res.append('\n'.join(cmd))
 
         return '\n        --VS--        \n'.join(res)
