@@ -33,7 +33,9 @@ class StatsCmd(CmdContainer):
             name = tg_rating[0]
             tg = tg_rating[1]
 
-        return f"{name} S:{solo} TG:{tg}"
+        res = f"{name} S:{solo} TG:{tg}"
+        print(res)
+        return res
 
     def match(self, params):
         user = params[0]
