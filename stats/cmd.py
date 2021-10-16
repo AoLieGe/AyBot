@@ -52,4 +52,4 @@ class StatsCmd(CmdContainer):
                 cmd.append(self.rank([player]))
             res.append('\n'.join(cmd))
 
-        return '\n        --VS--        \n'.join(res)
+        return '\n        --VS--\n'.join(res)
