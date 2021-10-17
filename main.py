@@ -42,6 +42,7 @@ async def on_ready():
 
 @discord_client.event
 async def on_message(message):
+    print(message.author.id)
     if message.author == discord_client.user:
         return
 
