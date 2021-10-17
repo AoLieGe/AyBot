@@ -9,7 +9,8 @@ class StatsCmd(CmdContainer):
         super().__init__()
         self._commands = {
             '/rank': (self.rank, 1),
-            '/match': (self.match, 1)
+            '/match': (self.match, 1),
+            '/reg': (self.reg, 1)
         }
 
     def rank(self, params):
@@ -53,3 +54,7 @@ class StatsCmd(CmdContainer):
             res.append('\n'.join(cmd))
 
         return '\n        --VS--\n'.join(res)
+
+    def reg(self, param):
+        pass
+
