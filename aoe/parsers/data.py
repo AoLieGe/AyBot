@@ -39,7 +39,7 @@ class AoeDataParser:
 
     # return civilisation data (e.g. units) in locale language
     def data_names(self, locale_code):
-        old_locale = self._data.locale_code()  # save current locale
+        old_locale = self._data.locale()  # save current locale
         self._data.set_locale(locale_code)  # set locale
         strings = self._data.strings()  # get strings for current locale
 
@@ -60,7 +60,7 @@ class AoeDataParser:
     def _civ_code(self, name):
         name = name[0].upper() + name[1:].lower()  # format name
         result = None  # init result label
-        old_locale_code = self._data.locale_code()  # save old locale
+        old_locale_code = self._data.locale()  # save old locale
 
         for locale_code in Locale().codes():
             self._data.set_locale(locale_code)  # set locale

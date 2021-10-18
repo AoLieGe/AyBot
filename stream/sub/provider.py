@@ -19,6 +19,12 @@ class SubscriptionProvider:
                 data = json.load(f)
             self._from_json(data)
 
+    def add(self, sub):
+        pass
+
+    def delete(self):
+        pass
+
     def _to_json(self):
         res = []
         for sub in self.subs.data:

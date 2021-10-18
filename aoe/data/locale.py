@@ -8,7 +8,7 @@ class Locale(metaclass=Singleton):  # can be singleton?
             'Русский': 'ru',
             'English': 'en'
         }
-        self._default = list(self._data.values())[0]
+        self.default = list(self._data.values())[0]
 
     # get locale names list
     def names(self):
@@ -26,7 +26,3 @@ class Locale(metaclass=Singleton):  # can be singleton?
     # get name by code otherwise return None
     def name(self, code):
         return {v: k for k, v in self._data.items()}.get(code.lower())
-
-    # get default locale code
-    def default_code(self):
-        return self._default

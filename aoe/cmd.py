@@ -1,18 +1,18 @@
 from commands.container import CmdContainer
 from aoe.data.locale import Locale
-from aoe.data.provider import AoeData
-from aoe.data.tree import AoeTree
+from aoe.data.raw import RawData
+from aoe.data.tree import TreeView
 from aoe.parsers.data import AoeDataParser
-from aoe.parsers.tree import AoeTreeParser
+from aoe.parsers.tree.view import AoeTreeParser
 from aoe.data.voice import VoiceCommands
 
 
 class AoeCmd(CmdContainer):
     def __init__(self):
         super().__init__()
-        self._data = AoeData()
+        self._data = RawData()
         self._data_parser = AoeDataParser(self._data)
-        self._tree = AoeTree()
+        self._tree = TreeView()
         self._tree_parser = AoeTreeParser(self._tree)
         self._voice = VoiceCommands()
 
@@ -34,7 +34,7 @@ class AoeCmd(CmdContainer):
         }
 
     def civ_info(self, params):
-        old_locale = self._data.locale_code()  # save old locale
+        old_locale = self._data.locale()  # save old locale
         locale_code = self._find_locale_code(params)  # find locale code in params (it's optionally parameter)
         data_param = self._find_data_cmd(params)  # find civ aoe command (it's optionally parameter)
 

@@ -1,5 +1,5 @@
-class AoeTree:
-    _tree = {
+class TreeView:
+    tree = {
         'units': {
             'barrack': {
                 'militia': (74, 75, 77, 473, 567),
@@ -65,6 +65,3 @@ class AoeTree:
             'monastery': (316, 319, 231, 252, 45, 233, 230, 438, 441, 439),
         }
     }
-
-    def get(self):
-        return self._tree

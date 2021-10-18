@@ -1,9 +1,4 @@
 class AoeUrl:
-    # get website url
-    @staticmethod
-    def site():
-        return "https://aoe2techtree.net"
-
     # get base aoe url
     @staticmethod
     def base():
