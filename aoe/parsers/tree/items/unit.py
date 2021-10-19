@@ -4,7 +4,7 @@ from aoe.parsers.tree.items.base import BaseItem
 class UnitItem(BaseItem):
     @staticmethod
     def info(item, strings):
-        desc = UnitItem.help_text(item, strings)
+        desc = UnitItem.desc(item, strings)
         desc = desc.replace('‹cost›', UnitItem.cost(item))
         stats = UnitItem.stats(item)
         return f'{desc}{stats}'

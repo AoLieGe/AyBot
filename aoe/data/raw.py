@@ -1,11 +1,11 @@
 import requests
 from aoe.data.locale import Locale
-from aoe.data.url import AoeUrl
+from aoe.data.url import DataUrl
 
 
 class RawData:
     def __init__(self):
-        url = AoeUrl.base()
+        url = DataUrl.raw()
         # TODO: can throw connection exception, need to catch...
         self.base = requests.get(url).json()  # read base aoe json
         self.strings = {}
@@ -18,7 +18,7 @@ class RawData:
             return False
 
         self.locale = code
-        url = AoeUrl.strings(code)
+        url = DataUrl.strings(code)
         # TODO: can throw connection exception, need to catch...
         self.strings = requests.get(url).json()  # read locale strings json for selected locale
         return True

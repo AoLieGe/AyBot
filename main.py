@@ -8,17 +8,12 @@ from commands.parser import CmdParser
 from aoe.cmd import AoeCmd
 from stats.cmd import StatsCmd
 
-from aoe.data.raw import RawData
-from aoe.parsers.tree.item import TreeItem
+from aoe.cmd import AoeCmd
+from msg import Msg
 
-raw = RawData()
-item_parser = TreeItem(raw)
-
-name = 'орел'
-info = item_parser.info(name, raw.locale)
-
-
-print(info)
+message = Msg('/цивы en')
+cmd = AoeCmd()
+print(cmd.parse(message))
 
 '''
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from

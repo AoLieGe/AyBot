@@ -4,7 +4,7 @@ class BaseItem:
         return strings[item['LanguageNameId']]
 
     @staticmethod
-    def help_text(item, strings):
+    def desc(item, strings):
         raw = strings['{}'.format(item['LanguageHelpId'])]
         b = raw.replace('<b>', '').replace('</b>', '')
         br = b.replace('<br>', '')

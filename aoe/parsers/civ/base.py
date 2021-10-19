@@ -1,5 +1,6 @@
 from aoe.data.locale import Locale
 
+
 class BaseCiv:
     def __init__(self, raw):
         self.raw = raw
@@ -10,14 +11,14 @@ class BaseCiv:
     # find <name> in locales and return how it named in raw json
     def _raw_name(self, name):
         old_locale = self.raw.locale
-        base_name = None
+        raw_name = None
 
         for locale in Locale().codes():
             self.raw.set_locale(locale)
             code = {v: k for k, v in self.raw.strings.items()}.get(name.capitalize())  # get code if exist
             if code:
-                base_name = {v: k for k, v in self.names.items()}.get(code)
+                raw_name = {v: k for k, v in self.names.items()}.get(code)
                 break
 
         self.raw.set_locale(old_locale)
-        return base_name
+        return raw_name

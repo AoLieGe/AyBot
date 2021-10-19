@@ -1,7 +1,7 @@
-class AoeUrl:
+class DataUrl:
     # get base aoe url
     @staticmethod
-    def base():
+    def raw():
         return "https://aoe2techtree.net/data/data.json"
 
     # get locale strings url
