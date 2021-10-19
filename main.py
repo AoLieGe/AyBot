@@ -8,7 +8,19 @@ from commands.parser import CmdParser
 from aoe.cmd import AoeCmd
 from stats.cmd import StatsCmd
 
+from aoe.data.raw import RawData
+from aoe.parsers.tree.item import TreeItem
 
+raw = RawData()
+item_parser = TreeItem(raw)
+
+name = 'орел'
+info = item_parser.info(name, raw.locale)
+
+
+print(info)
+
+'''
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 TWITCH_ID = os.getenv("TWITCH_ID")  # get twitch token from
 TWITCH_SECRET = os.getenv("TWITCH_SECRET")  # get twitch secret from
@@ -55,3 +67,4 @@ async def on_message(message):
 
 
 discord_client.run(DISCORD_TOKEN)
+'''

@@ -2,7 +2,7 @@ from commands.container import CmdContainer
 from aoe.data.locale import Locale
 from aoe.data.raw import RawData
 from aoe.data.tree import TreeView
-from aoe.parsers.data import AoeDataParser
+from aoe.parsers.civ.info import AoeDataParser
 from aoe.parsers.tree.view import AoeTreeParser
 from aoe.data.voice import VoiceCommands
 
