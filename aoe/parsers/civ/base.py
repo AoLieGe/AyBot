@@ -4,7 +4,6 @@ from aoe.data.locale import Locale
 class BaseCiv:
     def __init__(self, raw):
         self.raw = raw
-        self.str = raw.strings
         self.names = self.raw.base['civ_names']
         self.civ_desc = self.raw.base['civ_helptexts']
 

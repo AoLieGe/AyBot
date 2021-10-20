@@ -5,11 +5,11 @@ class CivInfo(BaseCiv):
     def __init__(self, raw):
         super().__init__(raw)
 
-    # return string that contain list of all civilisations
+    # return list of all civilisations
     def list(self, locale):
         old_locale = self.raw.locale
         self.raw.set_locale(locale)
-        res = [v for k, v in self.str.items() if k in list(self.names.values())]
+        res = [v for k, v in self.raw.strings.items() if k in list(self.names.values())]
 
         self.raw.set_locale(old_locale)
         return res

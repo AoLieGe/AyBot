@@ -42,15 +42,29 @@ class TreeItem:
     def _get_lang_id(self, name):
         # save locale
         old_locale = self.raw.locale
-        res = None
+        found = {}
 
         # find item name in all locales
         for locale in Locale().codes():
             self.raw.set_locale(locale)
             for code, string in self.raw.strings.items():
                 if name.lower() in string.lower():
-                    res = code
-                    break
+                    found[code] = string
+
+            if found:
+                break
 
         self.raw.set_locale(old_locale)
-        return res
+
+        #sort res to find shortest value
+        sorted_values = sorted(found.values(), key=len)
+        if sorted_values:
+            res_value = sorted_values[0]
+            #find code of shortest value
+            for code, value in found.items():
+                if value == res_value:
+                    return code
+
+        #res = {k: v for k, v in sorted(res.items(), key=lambda item: item[1])}
+        #res = list(res.keys())[0]
+

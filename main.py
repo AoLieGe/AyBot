@@ -8,14 +8,7 @@ from commands.parser import CmdParser
 from aoe.cmd import AoeCmd
 from stats.cmd import StatsCmd
 
-from aoe.cmd import AoeCmd
-from msg import Msg
 
-message = Msg('/цивы en')
-cmd = AoeCmd()
-print(cmd.parse(message))
-
-'''
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 TWITCH_ID = os.getenv("TWITCH_ID")  # get twitch token from
 TWITCH_SECRET = os.getenv("TWITCH_SECRET")  # get twitch secret from
@@ -62,4 +55,3 @@ async def on_message(message):
 
 
 discord_client.run(DISCORD_TOKEN)
-'''

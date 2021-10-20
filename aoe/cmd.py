@@ -59,7 +59,8 @@ class AoeCmd(CmdContainer):
         else:
             # if cmd not contain civ, check that it contain tree item
             if locale in params:
-                name = ' '.join(params.remove(locale))
+                params.remove(locale)
+                name = ' '.join(params)
             else:
                 name = ' '.join(params)
 
