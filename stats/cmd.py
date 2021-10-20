@@ -2,7 +2,6 @@ import requests
 from stats.api.url import AOE2netApi
 from stats.api.parser import AOE2netParser
 from commands.container import CmdContainer
-from db.provider import DBProvider
 from db.api.rank import RankApi
 
 
