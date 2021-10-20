@@ -9,7 +9,7 @@ class StatsCmd(CmdContainer):
     def __init__(self, db):
         super().__init__()
         self.db = db
-        self.db.fetchone(RankApi.create_table())
+        self.db.execute(RankApi.create_table())
         self._commands = {
             '/rank': (self.rank, 1),
             '/match': (self.match, 1),
