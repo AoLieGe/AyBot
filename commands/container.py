@@ -13,7 +13,7 @@ class CmdContainer:
     # method read commands and execute helper method for it
     def parse(self, message):
         self.msg = message
-        split = message.content.lower().split()
+        split = message.content.split() #.lower()
 
         try:
             cmd = split[0]
