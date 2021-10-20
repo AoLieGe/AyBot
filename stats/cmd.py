@@ -9,6 +9,7 @@ class StatsCmd(CmdContainer):
     def __init__(self, db):
         super().__init__()
         self.db = db
+        self.db.fetchone(RankApi.create_table())
         self._commands = {
             '/rank': (self.rank, 1),
             '/match': (self.match, 1),
@@ -58,8 +59,14 @@ class StatsCmd(CmdContainer):
         return '\n        --VS--\n'.join(res)
 
     def reg(self, param):
-        print(self.msg.author.id)
-        print(param[0])
+        user = self.msg.author.id
+        steam_id = param[0]
+        data = self.db.fetchone(RankApi.get_user(user))
+        print(user)
+        print(steam_id)
+        print(data)
+        if not data:
+            self.db.fetchone(RankApi.add_user(user, steam_id))
 
     def users(self):
         pass
