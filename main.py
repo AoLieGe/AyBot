@@ -7,16 +7,19 @@ from stream.cmd import StreamCmd
 from commands.parser import CmdParser
 from aoe.cmd import AoeCmd
 from stats.cmd import StatsCmd
+from db.provider import DBProvider
 
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 TWITCH_ID = os.getenv("TWITCH_ID")  # get twitch token from
 TWITCH_SECRET = os.getenv("TWITCH_SECRET")  # get twitch secret from
+DB_URL = os.getenv("DB_URL")
 
 # temp solution
 AYGUILD = os.getenv("AYGUILD")
 AYCHANNEL = os.getenv("AYCHANNEL")
 
+db = DBProvider(DB_URL)
 
 discord_client = discord.Client()
 subs = SubscriptionList()
@@ -31,7 +34,7 @@ stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
 cmd = CmdParser()
 cmd.add_parser(AoeCmd())
 cmd.add_parser(StreamCmd(sub_provider))
-cmd.add_parser(StatsCmd())
+cmd.add_parser(StatsCmd(db))
 
 
 @discord_client.event

@@ -2,11 +2,14 @@ import requests
 from stats.api.url import AOE2netApi
 from stats.api.parser import AOE2netParser
 from commands.container import CmdContainer
+from db.provider import DBProvider
+from db.api.rank import RankApi
 
 
 class StatsCmd(CmdContainer):
-    def __init__(self):
+    def __init__(self, db):
         super().__init__()
+        self.db = db
         self._commands = {
             '/rank': (self.rank, 1),
             '/match': (self.match, 1),
@@ -56,5 +59,8 @@ class StatsCmd(CmdContainer):
         return '\n        --VS--\n'.join(res)
 
     def reg(self, param):
-        pass
+        print(self.msg.author.id)
+        print(param[0])
 
+    def users(self):
+        pass
