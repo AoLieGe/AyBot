@@ -19,9 +19,9 @@ class StatsCmd(CmdContainer):
 
     def rank(self, params):
         if params:
-            player = params[0]
-            solo_url = AOE2netApi.rank(user=player, leaderboard_id=AOE2netApi.SoloID)
-            tg_url = AOE2netApi.rank(user=player, leaderboard_id=AOE2netApi.TeamID)
+            player = ' '.join(params)
+            solo_url = AOE2netApi.rank(player=player, leaderboard_id=AOE2netApi.SoloID)
+            tg_url = AOE2netApi.rank(player=player, leaderboard_id=AOE2netApi.TeamID)
         else:
             steam_id = self._get_user_steam()
             if not steam_id:
@@ -29,9 +29,6 @@ class StatsCmd(CmdContainer):
 
             solo_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.SoloID)
             tg_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.TeamID)
-
-        print(solo_url)
-        print(tg_url)
 
         solo_resp = requests.get(solo_url)
         tg_resp = requests.get(tg_url)
@@ -56,11 +53,17 @@ class StatsCmd(CmdContainer):
         return res
 
     def match(self, params):
-        user = params[0]
-        match_url = AOE2netApi.match(user=user)
+        if params:
+            player = ' '.join(params)
+            match_url = AOE2netApi.match(player=player)
+        else:
+            steam_id = self._get_user_steam()
+            if not steam_id:
+                return 'User not found'
+
+            match_url = AOE2netApi.match(steam_id=steam_id)
 
         match_resp = requests.get(match_url)
-
         commands = AOE2netParser.match(match_resp.text)
 
         res = []
