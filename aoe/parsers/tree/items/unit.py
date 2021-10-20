@@ -7,7 +7,7 @@ class UnitItem(BaseItem):
         desc = UnitItem.desc(item, strings)
         desc = desc.replace('‹cost›', UnitItem.cost(item))
         stats = UnitItem.stats(item)
-        return f'{desc}{stats}'
+        return f'{desc}\n{stats}'
 
     @staticmethod
     def stats(item):
