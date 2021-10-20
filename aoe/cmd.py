@@ -26,8 +26,7 @@ class AoeCmd(CmdContainer):
             '/цивы': (self.civ_list, 0),
             '/языки': (self.locales, 0),
             '/язык': (self.set_locale, 1),
-            '/чат': (self.voice_cmd, 1),
-            '/пёс': (self.pes, 1)
+            '/чат': (self.voice_cmd, 1)
             }
 
         self.tree_view_cmd = {
@@ -38,10 +37,6 @@ class AoeCmd(CmdContainer):
             'монастырь': self.tree_view.monastery,
             'док': self.tree_view.dock
         }
-
-    def pes(self, params):
-        name = ' '.join(params)
-        return f'@{name}, ты :swb_aha:'
 
     def info(self, params):
         civ_name = self._find_civ_name(params)
