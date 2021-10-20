@@ -11,7 +11,7 @@ class StatsCmd(CmdContainer):
         self.db = db
         self.db.execute(RankApi.create_table())
         self._commands = {
-            '/rank': (self.rank, 1),
+            '/rank': (self.rank, 0),
             '/match': (self.match, 1),
             '/reg': (self.reg, 1),
             '/unreg': (self.unreg, 0)
@@ -29,6 +29,9 @@ class StatsCmd(CmdContainer):
 
             solo_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.SoloID)
             tg_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.TeamID)
+
+        print(solo_url)
+        print(tg_url)
 
         solo_resp = requests.get(solo_url)
         tg_resp = requests.get(tg_url)
