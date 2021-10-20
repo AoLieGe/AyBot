@@ -39,8 +39,6 @@ class StatsCmd(CmdContainer):
         name = ''
         solo = tg = '----'
 
-        print(solo_rating)
-        print(tg_rating)
         if solo_rating:
             name = solo_rating[0]
             solo = solo_rating[1]

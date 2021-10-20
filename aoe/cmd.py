@@ -68,11 +68,7 @@ class AoeCmd(CmdContainer):
         return info
 
     def voice_cmd(self, params):
-        cmd = params[0]
-        print(cmd)
-        res = self.voice.data.get(cmd)
-        print(res)
-        return res
+        return self.voice.data.get(params[0])
 
     # get all civilisations
     def civ_list(self, params):
