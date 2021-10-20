@@ -40,7 +40,8 @@ class AoeCmd(CmdContainer):
         }
 
     def pes(self, params):
-        return f'@{params[0]}, ты :AyvazPes:'
+        name = ' '.join(params)
+        return f'@{name}, ты :swb_aha:'
 
     def info(self, params):
         civ_name = self._find_civ_name(params)

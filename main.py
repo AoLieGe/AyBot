@@ -42,11 +42,6 @@ async def on_ready():
 
 @discord_client.event
 async def on_message(message):
-    for emo in message.guild.emojis:
-        print(emo.name)
-
-
-
     if message.author == discord_client.user:
         return
 
