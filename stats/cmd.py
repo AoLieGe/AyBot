@@ -13,13 +13,22 @@ class StatsCmd(CmdContainer):
         self._commands = {
             '/rank': (self.rank, 1),
             '/match': (self.match, 1),
-            '/reg': (self.reg, 1)
+            '/reg': (self.reg, 1),
+            '/unreg': (self.reg, 0)
         }
 
     def rank(self, params):
-        player = params[0]
-        solo_url = AOE2netApi.rank(player, AOE2netApi.SoloID)
-        tg_url = AOE2netApi.rank(player, AOE2netApi.TeamID)
+        if params:
+            player = params[0]
+            solo_url = AOE2netApi.rank(user=player, leaderboard_id=AOE2netApi.SoloID)
+            tg_url = AOE2netApi.rank(user=player, leaderboard_id=AOE2netApi.TeamID)
+        else:
+            steam_id = self._get_user_steam()
+            if not steam_id:
+                return 'User not found'
+
+            solo_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.SoloID)
+            tg_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.TeamID)
 
         solo_resp = requests.get(solo_url)
         tg_resp = requests.get(tg_url)
@@ -27,7 +36,7 @@ class StatsCmd(CmdContainer):
         solo_rating = AOE2netParser.rank(solo_resp.text)
         tg_rating = AOE2netParser.rank(tg_resp.text)
 
-        name = player
+        name = ''
         solo = tg = '----'
 
         if solo_rating:
@@ -36,8 +45,11 @@ class StatsCmd(CmdContainer):
         if tg_rating:
             name = tg_rating[0]
             tg = tg_rating[1]
-
-        res = f"{name} S:{solo} TG:{tg}"
+        
+        if name:
+            res = f"{name} S:{solo} TG:{tg}"
+        else:
+            res = 'Rank not found'
         return res
 
     def match(self, params):
@@ -59,14 +71,28 @@ class StatsCmd(CmdContainer):
         return '\n        --VS--\n'.join(res)
 
     def reg(self, param):
+        if not param:
+            return "Reg error"
+
         user = self.msg.author.id
         steam_id = param[0]
         data = self.db.fetchone(RankApi.get_user(user))
-        print(user)
-        print(steam_id)
-        print(data)
+
         if not data:
             self.db.execute(RankApi.add_user(user, steam_id))
+            return 'Success'
 
-    def users(self):
-        pass
+    def unreg(self, param):
+        user = self.msg.author.id
+        data = self.db.fetchone(RankApi.get_user(user))
+        if data:
+            self.db.execute(RankApi.del_user(user))
+            return 'Success'
+        else:
+            return 'User not registered'
+
+    def _get_user_steam(self):
+        user = self.msg.author.id
+        data = self.db.fetchone(RankApi.get_user(user))
+        if data:
+            return data[1]
