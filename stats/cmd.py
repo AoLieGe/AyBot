@@ -66,7 +66,7 @@ class StatsCmd(CmdContainer):
         print(steam_id)
         print(data)
         if not data:
-            self.db.fetchone(RankApi.add_user(user, steam_id))
+            self.db.execute(RankApi.add_user(user, steam_id))
 
     def users(self):
         pass
