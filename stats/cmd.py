@@ -14,7 +14,7 @@ class StatsCmd(CmdContainer):
             '/rank': (self.rank, 1),
             '/match': (self.match, 1),
             '/reg': (self.reg, 1),
-            '/unreg': (self.reg, 0)
+            '/unreg': (self.unreg, 0)
         }
 
     def rank(self, params):
@@ -45,7 +45,7 @@ class StatsCmd(CmdContainer):
         if tg_rating:
             name = tg_rating[0]
             tg = tg_rating[1]
-        
+
         if name:
             res = f"{name} S:{solo} TG:{tg}"
         else:
