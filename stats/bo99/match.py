@@ -19,7 +19,7 @@ class MatchParser:
                     break
 
                 for match in matches:
-                    match_result = MatchParser.result(match, opponent)
+                    match_result = self.result(match, opponent)
                     if match_result:
                         match_count += 1
                         if match_result == 'Win':
