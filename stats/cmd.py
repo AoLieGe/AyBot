@@ -3,18 +3,21 @@ from stats.api.url import AOE2netApi
 from stats.api.parser import AOE2netParser
 from commands.container import CmdContainer
 from db.api.rank import RankApi
-
+from stats.bo99.match import MatchParser
 
 class StatsCmd(CmdContainer):
     def __init__(self, db):
         super().__init__()
         self.db = db
         self.db.execute(RankApi.create_table())
+        self.bo99_parser = MatchParser('[SDG]Колясик', 6082789)
+
         self._commands = {
             '/rank': (self.rank, 0),
             '/match': (self.match, 0),
             '/reg': (self.reg, 1),
-            '/unreg': (self.unreg, 0)
+            '/unreg': (self.unreg, 0),
+            '/бо99': (self.bo99, 1)
         }
 
     def rank(self, params):
@@ -77,9 +80,6 @@ class StatsCmd(CmdContainer):
         return '\n        --VS--\n'.join(res)
 
     def reg(self, param):
-        if not param:
-            return "Reg error"
-
         user = self.msg.author.id
         steam_id = param[0]
         data = self.db.fetchone(RankApi.get_user(user))
@@ -88,7 +88,7 @@ class StatsCmd(CmdContainer):
             self.db.execute(RankApi.add_user(user, steam_id))
             return 'Success'
 
-    def unreg(self, param):
+    def unreg(self, params):
         user = self.msg.author.id
         data = self.db.fetchone(RankApi.get_user(user))
         if data:
@@ -96,6 +96,10 @@ class StatsCmd(CmdContainer):
             return 'Success'
         else:
             return 'User not registered'
+
+    def bo99(self, params):
+        player = ' '.join(params)
+        return self.bo99_parser.score_with(player)
 
     def _get_user_steam(self):
         user = self.msg.author.id
