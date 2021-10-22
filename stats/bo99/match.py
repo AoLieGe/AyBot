@@ -12,8 +12,7 @@ class MatchParser:
         start = 0
 
         while True:
-            self._url(start)
-            r = requests.get(self._url(0))
+            r = requests.get(self._url(start))
             if r.status_code == 200:
                 matches = r.json()
                 if len(matches) == 0:

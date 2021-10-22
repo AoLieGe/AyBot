@@ -98,7 +98,6 @@ class StatsCmd(CmdContainer):
             return 'User not registered'
 
     def bo99(self, params):
-        print('bo99')
         player = ' '.join(params)
         return self.bo99_parser.score_with(player)
 
