@@ -36,8 +36,7 @@ class MatchParser:
     def _url(self, start):
         return f'https://aoe2.net/api/player/matches?game=aoe2de&profile_id={self.profile_id}&start={start}&count=1000'
 
-    @staticmethod
-    def result(match, opponent):
+    def result(self, match, opponent):
         if not match:
             return
 
@@ -58,6 +57,9 @@ class MatchParser:
             name = player['name']
             if not name:
                 return
+
+            if name == self.name:
+                continue
 
             if opponent.lower() in name.lower():
                 player_won = player['won']
