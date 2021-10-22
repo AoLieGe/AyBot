@@ -30,9 +30,9 @@ class MatchParser:
             start += 1000
 
         if match_count:
-            print(f'Арена   {self.name} {wins}:{match_count - wins} {opponent}')
+            return f'Арена   {self.name} {wins}:{match_count - wins} {opponent}'
         else:
-            print('Матчи не найдены')
+            return 'Матчи не найдены'
 
     def _url(self, start):
         return f'https://aoe2.net/api/player/matches?game=aoe2de&profile_id={self.profile_id}&start={start}&count=1000'

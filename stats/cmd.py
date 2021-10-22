@@ -10,7 +10,7 @@ class StatsCmd(CmdContainer):
         super().__init__()
         self.db = db
         self.db.execute(RankApi.create_table())
-        self.bo99_parser = MatchParser('[SDG]Колясик', 6082789)
+        self.bo99_parser = MatchParser('[SDG]Колясик', 3574406)
 
         self._commands = {
             '/rank': (self.rank, 0),
