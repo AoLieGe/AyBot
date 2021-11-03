@@ -7,6 +7,7 @@ from stream.cmd import StreamCmd
 from commands.parser import CmdParser
 from aoe.cmd import AoeCmd
 from stats.cmd import StatsCmd
+from chat.cmd import ChatCmd
 from db.provider import DBProvider
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
@@ -34,6 +35,7 @@ cmd = CmdParser()
 cmd.add_parser(AoeCmd())
 cmd.add_parser(StreamCmd(sub_provider))
 cmd.add_parser(StatsCmd(db))
+cmd.add_parser(ChatCmd())
 
 
 @discord_client.event
