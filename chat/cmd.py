@@ -7,7 +7,9 @@ class ChatCmd(CmdContainer):
 
         self._commands = {
             '/Лучший': (self.best_male, 0),
-            '/Лучшая': (self.best_female, 0)
+            '/Лучшая': (self.best_female, 0),
+            '/лучший': (self.best_male, 0),
+            '/лучшая': (self.best_female, 0)
         }
 
     def best_male(self, params):
