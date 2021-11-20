@@ -55,7 +55,7 @@ async def on_message(message):
     if not message.content:
         return
 
-    response = cmd.parse(message)
+    response = await cmd.parse(message)
     if response:
         await message.channel.send(response)
 

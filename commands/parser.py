@@ -8,9 +8,9 @@ class CmdParser:
         if cmd_parser in self._parsers:
             self._parsers.remove(cmd_parser)
 
-    def parse(self, message):
+    async def parse(self, message):
         for parser in self._parsers:
-            result = parser.parse(message)
+            result = await parser.parse(message)
             if result:
                 break
 

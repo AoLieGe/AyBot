@@ -8,11 +8,11 @@ class ModerateCmd(CmdContainer):
         self.bans = ['хуйхуй']
         self.admin_id = 123
 
-    def parse(self, message):
+    async def parse(self, message):
         msg = message.content.lower()
         user = message.author.id
 
         for banword in self.bans:
             if banword.lower() in msg:
-                message.delete()
+                await message.delete()
                 print('deleted: ' + msg)
