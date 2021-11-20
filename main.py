@@ -20,6 +20,7 @@ DB_URL = os.getenv("DB_URL")
 # temp solution
 AYGUILD = os.getenv("AYGUILD")
 AYCHANNEL = os.getenv("AYCHANNEL")
+AYADMIN = AYGUILD
 
 db = DBProvider(DB_URL)
 
@@ -38,7 +39,7 @@ cmd.add_parser(AoeCmd())
 cmd.add_parser(StreamCmd(sub_provider))
 cmd.add_parser(StatsCmd(db))
 cmd.add_parser(ChatCmd())
-cmd.add_parser(ModerateCmd())
+cmd.add_parser(ModerateCmd(AYADMIN, AYGUILD))
 
 
 @discord_client.event
