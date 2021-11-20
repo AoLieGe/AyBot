@@ -20,7 +20,7 @@ DB_URL = os.getenv("DB_URL")
 # temp solution
 AYGUILD = os.getenv("AYGUILD")
 AYCHANNEL = os.getenv("AYCHANNEL")
-AYADMIN = AYGUILD
+AYADMIN = os.getenv("AYADMIN")
 
 db = DBProvider(DB_URL)
 
