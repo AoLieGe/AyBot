@@ -14,7 +14,7 @@ class ModerateCmd(CmdContainer):
         msg = message.content.lower()
         user = message.author.id
 
-        print(msg + user)
+        print(msg, "user", user)
 
         for banword in self.bans:
             if banword.lower() in msg:
