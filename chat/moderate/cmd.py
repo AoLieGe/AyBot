@@ -8,7 +8,7 @@ class ModerateCmd(CmdContainer):
         self.admin = admin_id
         self.guild = guild_id
 
-        self.bans = ['twitch.tv', 'удоли']
+        self.bans = ['twitch.tv']
 
     async def parse(self, message):
         msg = message.content.lower()
@@ -16,11 +16,9 @@ class ModerateCmd(CmdContainer):
         guild = message.guild.id
 
         if guild != self.guild:
-            print('guild!!!')
             return
 
         if user == self.admin:
-            print('ADMIN!!!')
             return
 
         for banword in self.bans:

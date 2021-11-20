@@ -18,9 +18,9 @@ TWITCH_SECRET = os.getenv("TWITCH_SECRET")  # get twitch secret from
 DB_URL = os.getenv("DB_URL")
 
 # temp solution
-AYGUILD = os.getenv("AYGUILD")
-AYCHANNEL = os.getenv("AYCHANNEL")
-AYADMIN = os.getenv("AYADMIN")
+AYGUILD = int(os.getenv("AYGUILD"))
+AYCHANNEL = int(os.getenv("AYCHANNEL"))
+AYADMIN = int(os.getenv("AYADMIN"))
 
 db = DBProvider(DB_URL)
 
@@ -29,7 +29,7 @@ subs = SubscriptionList()
 sub_provider = SubscriptionProvider(subs)
 sub_provider.load()
 
-subs.add('heyayvaz', int(AYGUILD), int(AYCHANNEL), True)  #temp solution
+subs.add('heyayvaz', AYGUILD, AYCHANNEL, True)  #temp solution
 
 
 stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
@@ -39,7 +39,7 @@ cmd.add_parser(AoeCmd())
 cmd.add_parser(StreamCmd(sub_provider))
 cmd.add_parser(StatsCmd(db))
 cmd.add_parser(ChatCmd())
-cmd.add_parser(ModerateCmd(int(AYADMIN), int(AYGUILD)))
+cmd.add_parser(ModerateCmd(AYADMIN, AYGUILD))
 
 
 @discord_client.event
