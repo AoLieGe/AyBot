@@ -2,15 +2,19 @@ from commands.container import CmdContainer
 
 
 class ModerateCmd(CmdContainer):
-    def __init__(self):
+    def __init__(self, admin_id, guild_id):
         super().__init__()
 
-        self.bans = ['хуйхуй']
-        self.admin_id = 123
+        self.admin = admin_id
+        self.guild = guild_id
+
+        self.bans = ['удоли']
 
     async def parse(self, message):
         msg = message.content.lower()
         user = message.author.id
+
+        print(msg + user)
 
         for banword in self.bans:
             if banword.lower() in msg:
