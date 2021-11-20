@@ -11,7 +11,7 @@ class CmdContainer:
         return self._commands.keys()
 
     # method read commands and execute helper method for it
-    def parse(self, message):
+    async def parse(self, message):
         self.msg = message
         split = message.content.split() #.lower()
 
