@@ -35,6 +35,7 @@ class TreeItem:
     def _get_item_code(self, lang_id):
         for group, data in self.raw.base['data'].items():
             for code, item in data.items():
+                print(item)
                 if lang_id == str(item['LanguageNameId']):
                     return {'group': group, 'code': code}
 
