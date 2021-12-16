@@ -10,9 +10,12 @@ class ChatCmd(CmdContainer):
             '/Лучшая': (self.best_female, 0),
             '/лучший': (self.best_male, 0),
             '/лучшая': (self.best_female, 0),
-            '/best': (self.best_test, 0)
-
+            '/best': (self.best_test, 0),
+            'купил': (self.zloy, 0)
         }
+
+    def zloy(self, params):
+        return 'Чую запах новой псины. Кажется, пора ливать'
 
     def best_male(self, params):
         name = 'Boy'
