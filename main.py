@@ -1,6 +1,5 @@
 import os
 import discord
-from stream.sub.list import SubscriptionList
 from stream.sub.provider import SubscriptionProvider
 from stream.twitch.checker import Checker
 from stream.cmd import StreamCmd
@@ -25,12 +24,7 @@ AYADMIN = int(os.getenv("AYADMIN"))
 db = DBProvider(DB_URL)
 
 discord_client = discord.Client()
-subs = SubscriptionList()
-sub_provider = SubscriptionProvider(subs)
-sub_provider.load()
-
-subs.add('heyayvaz', AYGUILD, AYCHANNEL, True)  #temp solution
-
+sub_provider = SubscriptionProvider(db)
 
 stream_checker = Checker(TWITCH_ID, TWITCH_SECRET, discord_client, sub_provider)
 

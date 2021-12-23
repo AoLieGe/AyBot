@@ -1,4 +1,5 @@
 from commands.container import CmdContainer
+from stream.sub.data import SubscriptionData
 
 
 class StreamCmd(CmdContainer):
@@ -8,25 +9,18 @@ class StreamCmd(CmdContainer):
 
         self._commands = {
             '/sub': (self.sub, 1),
-            '/unsub': (self.unsub, 1)
+            '/unsub': (self.unsub, 1)  # ,'/subs': (self.subs, 0)
         }
+
+    def subs(self, params):
+        return [sub.__str__() for sub in self.provider.load()]
 
     def sub(self, params):
         name = params[0]
-        subs = self.provider.subs
-
-        if subs.add(name, self.msg.guild.id, self.msg.channel.id, True if 'everyone' in params else False):
-            self.provider.save()
-            print('success')
-        else:
-            print('error')
+        sub = SubscriptionData(name, self.msg.guild.id, self.msg.channel.id, True if 'everyone' in params else False)
+        self.provider.add(sub)
 
     def unsub(self, params):
         name = params[0]
-        subs = self.provider.subs
-
-        if subs.delete(name, self.msg.guild.id):
-            self.provider.save()
-            print('success')
-        else:
-            print('error')
+        guild = self.msg.guild.id
+        self.provider.delete(name, guild)

@@ -36,8 +36,6 @@ class ChatCmd(CmdContainer):
         if params:
             name = params[0]
 
-        self.msg.delete(self.msg)
-
         return f"{name}, ты лучший!"
 
 

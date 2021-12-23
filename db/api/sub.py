@@ -31,10 +31,17 @@ class SubApi:
         ;"""
 
     @staticmethod
-    def del_sub(twitch_name, guild, channel):
+    def del_sub(twitch_name, guild):
         return f"""DELETE FROM {SubApi.table_name} WHERE
-        twitch_name = '{twitch_name}' AND guild = {guild} AND channel = {channel}
+        twitch_name = '{twitch_name}' AND guild = {guild}
         ;"""
+
+    @staticmethod
+    def update_sub(twitch_name, guild, channel, everyone, status, offline_count):
+        return f"""UPDATE {SubApi.table_name}
+            SET everyone = {everyone}, status = {status}, offline_count = {offline_count}
+            WHERE twitch_name = '{twitch_name}' AND guild = {guild} AND channel = {channel}
+            ;"""
 
     @staticmethod
     def get_sub(twitch_name, guild, channel):
@@ -45,17 +52,3 @@ class SubApi:
     @staticmethod
     def get_subs():
         return f"SELECT * FROM {SubApi.table_name};"
-
-    @staticmethod
-    def set_status(sub_id, status):
-        return f"""UPDATE {SubApi.table_name}
-        SET status = {status}
-        WHERE id = {sub_id}
-        """
-
-    @staticmethod
-    def set_offline_count(sub_id, offline_count):
-        return f"""UPDATE {SubApi.table_name}
-            SET offline_count = {offline_count}
-            WHERE id = {sub_id}
-            """

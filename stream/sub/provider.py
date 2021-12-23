@@ -1,38 +1,37 @@
-import json
-import os
+from db.api.sub import SubApi
 from stream.sub.data import SubscriptionData
 
 
 class SubscriptionProvider:
-    def __init__(self, subs):
-        self.subs = subs
-
-    # get instance of subscription class and save it to json
-    def save(self):
-        data = self._to_json()
-        with open('subs.json', 'w') as f:
-            f.write(json.dumps(data))
-
-    def load(self):
-        if os.path.isfile('subs.json'):
-            with open('subs.json') as f:
-                data = json.load(f)
-            self._from_json(data)
+    def __init__(self, db):
+        self.db = db
+        self.db.execute(SubApi.create_table())
 
     def add(self, sub):
-        pass
+        self.db.execute(SubApi.add_sub(sub.name,
+                                       sub.guild,
+                                       sub.channel,
+                                       sub.everyone,
+                                       sub.status,
+                                       sub.offline_count))
 
-    def delete(self):
-        pass
+    def delete(self, sub_name, sub_guild):
+        self.db.execute(SubApi.del_sub(sub_name, sub_guild))
 
-    def _to_json(self):
-        res = []
-        for sub in self.subs.data:
-            res.append(sub.__dict__)
-        return res
+    def update(self, sub):
+        self.db.execute(SubApi.update_sub(sub.name,
+                                          sub.guild,
+                                          sub.channel,
+                                          sub.everyone,
+                                          sub.status,
+                                          sub.offline_count))
 
-    def _from_json(self, json_data):
-        self.subs.data.clear()
-        for item in json_data:
-            sub = SubscriptionData(item['name'], item['guild'], item['channel'], item['everyone'])
-            self.subs.data.append(sub)
+    def load(self):
+        subs_data = self.db.fetchall(SubApi.get_subs())
+        subs_list = []
+
+        for sub_data in subs_data:
+            _, name, guild, channel, everyone, status, count = sub_data
+            subs_list.append(SubscriptionData(name, guild, channel, everyone, status, count))
+
+        return subs_list

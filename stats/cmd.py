@@ -5,6 +5,7 @@ from commands.container import CmdContainer
 from db.api.rank import RankApi
 from stats.bo99.match import MatchParser
 
+
 class StatsCmd(CmdContainer):
     def __init__(self, db):
         super().__init__()
