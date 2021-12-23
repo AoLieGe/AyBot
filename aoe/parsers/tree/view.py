@@ -41,7 +41,7 @@ class TreeViewParser:
     def dock(self, civ_codes, data_names):
         self._set_data(civ_codes, data_names)
         units = self._unit_info('dock')
-        techs = self._tech_info('dock', 'arc_att', None, True, False)
+        techs = self._tech_info('dock', 'arc_att', None, True, True)
         return units + techs
 
     def monastery(self, civ_codes, data_names):

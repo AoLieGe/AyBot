@@ -61,7 +61,8 @@ class TreeView:
 
                 'university': {
                     'archery': (47, 93),
-                    'siege': (377,)
+                    'siege': (377,),
+                    'dock': (93,380)
                 },
 
                 'monastery': (316, 319, 231, 252, 45, 233, 230, 438, 441, 439),
