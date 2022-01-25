@@ -13,7 +13,7 @@ class CmdContainer:
     # method read commands and execute helper method for it
     async def parse(self, message):
         self.msg = message
-        split = message.content.split() #.lower()
+        split = message.content.split()
 
         try:
             cmd = split[0]
@@ -25,5 +25,5 @@ class CmdContainer:
         if cmd in self._commands:
             param_number = self._commands[cmd][params_id]
             if len(params) >= param_number:
-                res = self._commands[cmd][handler_id](params)
+                res = await self._commands[cmd][handler_id](params)
         return res

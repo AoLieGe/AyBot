@@ -1,9 +1,11 @@
+import aiohttp
 import requests
 from stats.api.url import AOE2netApi
 from stats.api.parser import AOE2netParser
 from commands.container import CmdContainer
 from db.api.rank import RankApi
 from stats.bo99.match import MatchParser
+from stats.api.parser import StatsParser as Stats
 
 
 class StatsCmd(CmdContainer):
@@ -56,29 +58,30 @@ class StatsCmd(CmdContainer):
             res = 'Rank not found'
         return res
 
-    def match(self, params):
+    async def match(self, params):
         if params:
             player = ' '.join(params)
             match_url = AOE2netApi.match(player=player)
+
+            match_resp = requests.get(match_url)
+            commands = AOE2netParser.match(match_resp.text)
+
+            res = []
+
+            for players in commands:
+                cmd = []
+                for player in players:
+                    cmd.append(self.rank([player]))
+                res.append('\n'.join(cmd))
+
+            return '\n        --VS--\n'.join(res)
         else:
             steam_id = self._get_user_steam()
             if not steam_id:
                 return 'User not found'
 
-            match_url = AOE2netApi.match(steam_id=steam_id)
-
-        match_resp = requests.get(match_url)
-        commands = AOE2netParser.match(match_resp.text)
-
-        res = []
-
-        for players in commands:
-            cmd = []
-            for player in players:
-                cmd.append(self.rank([player]))
-            res.append('\n'.join(cmd))
-
-        return '\n        --VS--\n'.join(res)
+            async with aiohttp.ClientSession() as s:
+                return await Stats.match_by_id(s, steam_id)
 
     def reg(self, param):
         user = self.msg.author.id

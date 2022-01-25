@@ -1,3 +1,35 @@
+import asyncio
+import aiohttp
+from stats.api.request import StatsRequest as Api
+from stats.api.misc import *
+
+
+class StatsParser:
+    @staticmethod
+    async def rating_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
+        leaderboards = [e.name for e in LeaderboardID]
+        tasks = [Api.rating(session, steam_id, leaderboard_id=lb.value) for lb in LeaderboardID]
+        resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
+        json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
+        rates = [data['rating'] if data != {} else '----' for data in json_data]
+        result = [f'{lb}:{r}' for lb, r in zip(leaderboards, rates)]
+        return ' '.join(result)
+
+    @staticmethod
+    async def match_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
+        status, resp = await Api.match(session, steam_id)
+        if status != 200:
+            return f'Error: Request return status {status}'
+        try:
+            data = json.loads(resp)
+            players_data = data['last_match']['players']
+            sorted_by_team = [p for p in sorted(players_data, key=lambda item: item['team'])]
+            rates = [await StatsParser.rating_by_id(session, data['steam_id']) for data in sorted_by_team]
+            return '\n'.join([f"{d['team']}: {d['name']} {r}" for r, d in zip(rates, sorted_by_team)])
+        except ValueError:
+            return 'Match parse error: incorrect match json'
+
+
 class AOE2netParser:
 
     # format rank response into list of player name and rank

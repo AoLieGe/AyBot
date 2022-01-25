@@ -12,6 +12,4 @@ class CmdParser:
         for parser in self._parsers:
             result = await parser.parse(message)
             if result:
-                break
-
-        return result
+                return result

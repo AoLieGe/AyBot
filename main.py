@@ -15,8 +15,6 @@ DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 TWITCH_ID = os.getenv("TWITCH_ID")  # get twitch token from
 TWITCH_SECRET = os.getenv("TWITCH_SECRET")  # get twitch secret from
 DB_URL = os.getenv("DB_URL")
-
-# temp solution
 AYGUILD = int(os.getenv("AYGUILD"))
 AYCHANNEL = int(os.getenv("AYCHANNEL"))
 AYADMIN = int(os.getenv("AYADMIN"))
