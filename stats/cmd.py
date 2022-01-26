@@ -68,15 +68,12 @@ class StatsCmd(CmdContainer):
                     return "Player not found"
 
                 name, steam_id = resp
-                rating = await Stats.match_by_id(s, steam_id)
-
-                return f'{name} {rating}'
             else:
                 steam_id = self._get_user_steam()
                 if not steam_id:
-                    return 'User not found'
+                    return 'Player not found'
 
-                return await Stats.match_by_id(s, steam_id)
+            return await Stats.match_by_id(s, steam_id)
 
     async def reg(self, param):
         user = self.msg.author.id

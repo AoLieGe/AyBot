@@ -10,7 +10,6 @@ class StatsParser:
         """return (name, steam_id) for founded player or None if not"""
         tasks = [StatsParser._find_player(session, name, lb.value) for lb in LeaderboardID]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
-        print(resp)
         full_match = [p for p in resp if p and p['full_match']]
         if full_match:
             return max_counts(full_match)
