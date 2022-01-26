@@ -22,12 +22,10 @@ class StatsParser:
         tasks = [StatsParser._find_player(session, name, lb.value) for lb in LeaderboardID]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         full_match = [p for p in resp if p and p['full_match']]
-        print(full_match)
         if full_match:
             return max_counts(full_match)
 
         not_full_match = [p for p in resp if p and not p['full_match']]
-        print(not_full_match)
         if not_full_match:
             return max_counts(not_full_match)
 
@@ -36,7 +34,7 @@ class StatsParser:
         leaderboards = [lb.name for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         if not steam_id or steam_id == '':
             return ' '.join([f'{lb}:----' for lb in leaderboards])
-        
+
         tasks = [Api.rating(session, steam_id, leaderboard_id=lb.value)
                  for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
@@ -53,7 +51,6 @@ class StatsParser:
         try:
             data = json.loads(resp)
             players_data = data['last_match']['players']
-            print(players_data)
             sorted_by_team = [p for p in sorted(players_data, key=lambda item: item['team'])]
             rates = [await StatsParser.rating_by_id(session, data['steam_id']) for data in sorted_by_team]
             return '\n'.join([f"{format_team(d['team'])}: {d['name']} {r}" for r, d in zip(rates, sorted_by_team)])
