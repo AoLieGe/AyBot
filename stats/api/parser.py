@@ -6,9 +6,24 @@ from stats.api.misc import *
 
 class StatsParser:
     @staticmethod
+    async def find_steam_id(session: aiohttp.ClientSession, name: str) -> tuple:
+        """return (name, steam_id) for founded player or None if not"""
+        tasks = [StatsParser._find_player(session, name, lb.value) for lb in LeaderboardID]
+        resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
+        print(resp)
+        full_match = [p for p in resp if p and p['full_match']]
+        if full_match:
+            return max_counts(full_match)
+
+        not_full_match = [p for p in resp if p and not p['full_match']]
+        if not_full_match:
+            return max_counts(not_full_match)
+
+    @staticmethod
     async def rating_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
-        leaderboards = [lb.name for lb in LeaderboardID]
-        tasks = [Api.rating(session, steam_id, leaderboard_id=lb.value) for lb in LeaderboardID]
+        leaderboards = [lb.name for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
+        tasks = [Api.rating(session, steam_id, leaderboard_id=lb.value)
+                 for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
         rates = [data['rating'] if data != {} else '----' for data in json_data]
@@ -29,6 +44,32 @@ class StatsParser:
         except ValueError:
             return 'Match parse error: incorrect match json'
 
+    @staticmethod
+    async def _find_player(session: aiohttp.ClientSession, name: str, leaderboard_id: LeaderboardID) -> dict:
+        """find full match in name or return first if not found or return {} if any players not found"""
+        status, resp = await Api.leaderboard(session, name, leaderboard_id)
+        if status != 200:
+            return {}
+
+        try:
+            players = json.loads(resp)['leaderboard']
+        except (ValueError, KeyError):
+            return {}
+
+        full_match = False
+        for player in players:
+            if name == player['name']:
+                result = player
+                full_match = True
+                break
+        else:
+            result = players[0]
+
+        return {
+            'full_match': full_match,
+            'name': result['name'],
+            'steam_id': result['steam_id']
+        }
 
 class AOE2netParser:
 

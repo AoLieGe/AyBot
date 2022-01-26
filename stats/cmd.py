@@ -59,28 +59,23 @@ class StatsCmd(CmdContainer):
         return res
 
     async def match(self, params):
-        if params:
-            player = ' '.join(params)
-            match_url = AOE2netApi.match(player=player)
+        async with aiohttp.ClientSession() as s:
+            if params:
+                player = ' '.join(params)
 
-            match_resp = requests.get(match_url)
-            commands = AOE2netParser.match(match_resp.text)
+                resp = await Stats.find_steam_id(s, player)
+                if not resp:
+                    return "Player not found"
 
-            res = []
+                name, steam_id = resp
+                rating = await Stats.rating_by_id(s, steam_id)
 
-            for players in commands:
-                cmd = []
-                for player in players:
-                    cmd.append(self.rank([player]))
-                res.append('\n'.join(cmd))
+                return f'{name} {rating}'
+            else:
+                steam_id = self._get_user_steam()
+                if not steam_id:
+                    return 'User not found'
 
-            return '\n        --VS--\n'.join(res)
-        else:
-            steam_id = self._get_user_steam()
-            if not steam_id:
-                return 'User not found'
-
-            async with aiohttp.ClientSession() as s:
                 return await Stats.match_by_id(s, steam_id)
 
     async def reg(self, param):

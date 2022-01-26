@@ -4,21 +4,15 @@ from misc.response import get_response
 
 class StatsRequest:
     @staticmethod
-    async def leaderboard(session, name: str = '', steam_id: str = '',
+    async def leaderboard(session, name: str,
                           leaderboard_id: LeaderboardID = LeaderboardID.S.value):
         url = "https://aoe2.net/api/leaderboard"
         params = {
             'game': 'aoe2de',
             'leaderboard_id': f'{leaderboard_id}',
             'count': '10000',
+            'search': f'{name}'
         }
-
-        if name:
-            params['search'] = f'{name}'
-        elif steam_id:
-            params['steam_id'] = f'{steam_id}'
-
-        print(f'{name} + {params}')
 
         return await get_response(session, url, params)
 
