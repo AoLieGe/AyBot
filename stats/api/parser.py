@@ -34,6 +34,9 @@ class StatsParser:
     @staticmethod
     async def rating_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
         leaderboards = [lb.name for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
+        if not steam_id or steam_id == '':
+            return ' '.join([f'{lb}:----' for lb in leaderboards])
+        
         tasks = [Api.rating(session, steam_id, leaderboard_id=lb.value)
                  for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
