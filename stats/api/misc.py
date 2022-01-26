@@ -24,7 +24,7 @@ def format_team(team: int) -> str:
 def max_counts(players: list) -> tuple:
     """return player with max counts in players list"""
     counts = [(players.count(p), p) for p in players]
-    sort_by_counts = [p for count, p in sorted(counts, key=lambda val: val[0])]
+    sort_by_counts = [p for count, p in sorted(counts, key=lambda val: val[0], reverse=True)]
     return sort_by_counts[0]['name'], sort_by_counts[0]['steam_id']
 
 
