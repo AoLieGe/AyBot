@@ -38,11 +38,8 @@ class StatsCmd(CmdContainer):
 
                 name = await Stats.find_name_by_id(s, steam_id)
                 if name == '':
-                    return '''
-                    Для использования команды без ника необходимо выполнить команду:\n
-                    /reg твой_стим_id\n
-                    Без регистрации steam_id использование команды возможно только с указанием ника
-                    '''
+                    return '''Для использования команды без ника необходимо выполнить команду:\n /reg твой_стим_id\n Без 
+                    регистрации steam_id использование команды возможно только с указанием ника'''
 
             ratings = await Stats.rating_by_id(s, steam_id)
             return f'{name} {ratings}'
@@ -61,11 +58,8 @@ class StatsCmd(CmdContainer):
             else:
                 steam_id = self._get_user_steam()
                 if not steam_id:
-                    return '''
-                    Для использования команды без ника необходимо выполнить команду:\n
-                    /reg твой_стим_id\n
-                    Без регистрации steam_id использование команды возможно только с указанием ника
-                    '''
+                    return '''Для использования команды без ника необходимо выполнить команду:\n /reg твой_стим_id\n Без 
+                    регистрации steam_id использование команды возможно только с указанием ника'''
 
             return await Stats.match_by_id(s, steam_id)
 
