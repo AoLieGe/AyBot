@@ -22,10 +22,12 @@ class StatsParser:
         tasks = [StatsParser._find_player(session, name, lb.value) for lb in LeaderboardID]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         full_match = [p for p in resp if p and p['full_match']]
+        print(full_match)
         if full_match:
             return max_counts(full_match)
 
         not_full_match = [p for p in resp if p and not p['full_match']]
+        print(not_full_match)
         if not_full_match:
             return max_counts(not_full_match)
 
