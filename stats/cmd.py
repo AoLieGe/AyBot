@@ -18,7 +18,7 @@ class StatsCmd(CmdContainer):
         self.db.execute(RankApi.create_table())
         self.db.execute(SdgApi.create_table())
         tm = int(time.mktime(time.struct_time((2022, 1, 1, 0, 0, 0, 5, 1, -1))))
-        self.db.fetchone(SdgApi.add_user(76561198131951866, 1063, 0, tm))
+        self.db.execute(SdgApi.add_user(76561198131951866, 1063, 0, tm))
         self.bo99_parser = MatchParser('[SDG]Колясик', 3574406)
 
         self._commands = {
@@ -101,8 +101,11 @@ class StatsCmd(CmdContainer):
         async with aiohttp.ClientSession() as s:
             for player in sdg:
                 steam_id, last_rank, last_delta, last_time = player
+                print(player)
                 name = await Stats.find_name_by_id(s, steam_id)
+                print(name)
                 code, resp = await Api.rating(s, steam_id, LeaderboardID.S.value)
+                print(resp)
                 if code != 200:
                     continue
 
