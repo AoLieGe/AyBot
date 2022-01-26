@@ -52,6 +52,7 @@ class StatsParser:
 
         try:
             players = json.loads(resp)['leaderboard']
+            print(players)
         except (ValueError, KeyError):
             return {}
 
