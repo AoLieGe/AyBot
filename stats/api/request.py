@@ -5,7 +5,7 @@ from misc.response import get_response
 class StatsRequest:
     @staticmethod
     async def leaderboard(session, name: str = '', steam_id: str = '',
-                          leaderboard_id: LeaderboardID = LeaderboardID.SOLO.value):
+                          leaderboard_id: LeaderboardID = LeaderboardID.S.value):
         url = "https://aoe2.net/api/leaderboard"
         params = {
             'game': 'aoe2de',
