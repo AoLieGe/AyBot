@@ -24,39 +24,21 @@ class StatsCmd(CmdContainer):
         }
 
     async def rank(self, params):
-        if params:
-            player = ' '.join(params)
-            solo_url = AOE2netApi.rank(player=player, leaderboard_id=AOE2netApi.SoloID)
-            tg_url = AOE2netApi.rank(player=player, leaderboard_id=AOE2netApi.TeamID)
-        else:
-            steam_id = self._get_user_steam()
-            if not steam_id:
-                return 'User not found'
+        async with aiohttp.ClientSession() as s:
+            if params:
+                player = ' '.join(params)
 
-            solo_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.SoloID)
-            tg_url = AOE2netApi.rank(steam_id=steam_id, leaderboard_id=AOE2netApi.TeamID)
+                resp = await Stats.find_steam_id(s, player)
+                if not resp:
+                    return "Player not found"
 
-        solo_resp = requests.get(solo_url)
-        tg_resp = requests.get(tg_url)
+                name, steam_id = resp
+            else:
+                steam_id = self._get_user_steam()
+                if not steam_id:
+                    return 'Player not found'
 
-        solo_rating = AOE2netParser.rank(solo_resp.text)
-        tg_rating = AOE2netParser.rank(tg_resp.text)
-
-        name = ''
-        solo = tg = '----'
-
-        if solo_rating:
-            name = solo_rating[0]
-            solo = solo_rating[1]
-        if tg_rating:
-            name = tg_rating[0]
-            tg = tg_rating[1]
-
-        if name:
-            res = f"{name} S:{solo} TG:{tg}"
-        else:
-            res = 'Rank not found'
-        return res
+            return await Stats.rating_by_id(s, steam_id)
 
     async def match(self, params):
         async with aiohttp.ClientSession() as s:
