@@ -14,7 +14,14 @@ def to_json(resp: str) -> dict:
         return {}
 
 
+def format_team(team: int) -> str:
+    if team == -1:
+        return '-'
+    else:
+        return f'{team}'
+
+
 class LeaderboardID(enum.Enum):
-    # UNRANKED = 0
-    SOLO = 3
-    TG = 4
+    S = 3  # SOLO
+    TG = 4  # TG
+
