@@ -52,8 +52,10 @@ class StatsParser:
 
         try:
             players = json.loads(resp)['leaderboard']
-            print(players)
-        except (ValueError, KeyError):
+        except ValueError:
+            return {}
+
+        if not players:
             return {}
 
         full_match = False
