@@ -38,7 +38,12 @@ class StatsCmd(CmdContainer):
                 if not steam_id:
                     return 'Player not found'
 
-            return await Stats.rating_by_id(s, steam_id)
+                name = Stats.find_name_by_id(s, steam_id)
+                if name == '':
+                    return 'Player not found'
+
+            ratings = await Stats.rating_by_id(s, steam_id)
+            return f'{name} {ratings}'
 
     async def match(self, params):
         async with aiohttp.ClientSession() as s:

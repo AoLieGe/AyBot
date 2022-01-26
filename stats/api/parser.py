@@ -6,6 +6,17 @@ from stats.api.misc import *
 
 class StatsParser:
     @staticmethod
+    async def find_name_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
+        status, resp = await Api.match(session, steam_id)
+        if status != 200:
+            return f''
+        try:
+            data = json.loads(resp)
+            return data['name']
+        except ValueError:
+            return ''
+
+    @staticmethod
     async def find_steam_id(session: aiohttp.ClientSession, name: str) -> tuple:
         """return (name, steam_id) for founded player or None if not"""
         tasks = [StatsParser._find_player(session, name, lb.value) for lb in LeaderboardID]
@@ -42,6 +53,8 @@ class StatsParser:
             return '\n'.join([f"{format_team(d['team'])}: {d['name']} {r}" for r, d in zip(rates, sorted_by_team)])
         except ValueError:
             return 'Match parse error: incorrect match json'
+
+
 
     @staticmethod
     async def _find_player(session: aiohttp.ClientSession, name: str, leaderboard_id: LeaderboardID) -> dict:
