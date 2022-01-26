@@ -50,6 +50,7 @@ class StatsParser:
         try:
             data = json.loads(resp)
             players_data = data['last_match']['players']
+            print(players_data)
             sorted_by_team = [p for p in sorted(players_data, key=lambda item: item['team'])]
             rates = [await StatsParser.rating_by_id(session, data['steam_id']) for data in sorted_by_team]
             return '\n'.join([f"{format_team(d['team'])}: {d['name']} {r}" for r, d in zip(rates, sorted_by_team)])
