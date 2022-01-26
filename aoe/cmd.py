@@ -71,7 +71,7 @@ class AoeCmd(CmdContainer):
         return self.voice.data.get(params[0])
 
     # get all civilisations
-    def civ_list(self, params):
+    async def civ_list(self, params):
         locale = self._find_locale_code(params)
         if not locale:
             locale = self.raw.locale
