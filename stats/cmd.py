@@ -68,7 +68,7 @@ class StatsCmd(CmdContainer):
                     return "Player not found"
 
                 name, steam_id = resp
-                rating = await Stats.rating_by_id(s, steam_id)
+                rating = await Stats.match_by_id(s, steam_id)
 
                 return f'{name} {rating}'
             else:
