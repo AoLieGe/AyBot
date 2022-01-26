@@ -49,6 +49,7 @@ class StatsCmd(CmdContainer):
                 player = ' '.join(params)
 
                 resp = await Stats.find_steam_id(s, player)
+                print(resp)
                 if not resp:
                     return "Player not found"
 
