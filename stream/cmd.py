@@ -12,15 +12,15 @@ class StreamCmd(CmdContainer):
             '/unsub': (self.unsub, 1)  # ,'/subs': (self.subs, 0)
         }
 
-    def subs(self, params):
+    async def subs(self, params):
         return [sub.__str__() for sub in self.provider.load()]
 
-    def sub(self, params):
+    async def sub(self, params):
         name = params[0]
         sub = SubscriptionData(name, self.msg.guild.id, self.msg.channel.id, True if 'everyone' in params else False)
         self.provider.add(sub)
 
-    def unsub(self, params):
+    async def unsub(self, params):
         name = params[0]
         guild = self.msg.guild.id
         self.provider.delete(name, guild)

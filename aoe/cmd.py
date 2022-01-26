@@ -38,7 +38,7 @@ class AoeCmd(CmdContainer):
             'док': self.tree_view.dock
         }
 
-    def info(self, params):
+    async def info(self, params):
         civ_name = self._find_civ_name(params)
         tree_view = self._find_tree_view(params)
         locale = self._find_locale_code(params)
@@ -67,7 +67,7 @@ class AoeCmd(CmdContainer):
             info = self.tree_item.info(name, locale)
         return info
 
-    def voice_cmd(self, params):
+    async def voice_cmd(self, params):
         return self.voice.data.get(params[0])
 
     # get all civilisations
@@ -78,14 +78,14 @@ class AoeCmd(CmdContainer):
         return '\n'.join(self.civ_info.list(locale))
 
     # get locales listing
-    def locales(self, params):
+    async def locales(self, params):
         names = Locale().names()
         code = Locale().code
 
         return ''.join(["{0} - {1}\n".format(name, code(name)) for name in names])
 
     # set default locale for answers
-    def set_locale(self, params):
+    async def set_locale(self, params):
         locale_code = Locale().code(params[0])
         self.raw.set_locale(locale_code)
 

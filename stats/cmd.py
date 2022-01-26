@@ -23,7 +23,7 @@ class StatsCmd(CmdContainer):
             '/бо99': (self.bo99, 1)
         }
 
-    def rank(self, params):
+    async def rank(self, params):
         if params:
             player = ' '.join(params)
             solo_url = AOE2netApi.rank(player=player, leaderboard_id=AOE2netApi.SoloID)
@@ -83,7 +83,7 @@ class StatsCmd(CmdContainer):
             async with aiohttp.ClientSession() as s:
                 return await Stats.match_by_id(s, steam_id)
 
-    def reg(self, param):
+    async def reg(self, param):
         user = self.msg.author.id
         steam_id = param[0]
         data = self.db.fetchone(RankApi.get_user(user))
@@ -92,7 +92,7 @@ class StatsCmd(CmdContainer):
             self.db.execute(RankApi.add_user(user, steam_id))
             return 'Success'
 
-    def unreg(self, params):
+    async def unreg(self, params):
         user = self.msg.author.id
         data = self.db.fetchone(RankApi.get_user(user))
         if data:

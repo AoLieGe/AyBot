@@ -14,24 +14,24 @@ class ChatCmd(CmdContainer):
             '/zloy': (self.zloy, 0)
         }
 
-    def zloy(self, params):
+    async def zloy(self, params):
         return 'Чую запах новой псины. Кажется, пора ливать'
 
-    def best_male(self, params):
+    async def best_male(self, params):
         name = 'Boy'
         if params:
             name = params[0]
 
         return f"{name}, ты лучший!"
 
-    def best_female(self, params):
+    async def best_female(self, params):
         name = 'Детка'
         if params:
             name = params[0]
 
         return f"{name}, ты лучшая!"
 
-    def best_test(self, params):
+    async def best_test(self, params):
         name = 'Boy'
         if params:
             name = params[0]
