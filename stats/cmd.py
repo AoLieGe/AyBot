@@ -38,7 +38,7 @@ class StatsCmd(CmdContainer):
                 if not steam_id:
                     return 'Player not found'
 
-                name = Stats.find_name_by_id(s, steam_id)
+                name = await Stats.find_name_by_id(s, steam_id)
                 if name == '':
                     return 'Player not found'
 
