@@ -35,7 +35,7 @@ class StatsCmd(CmdContainer):
             if params:
                 player = ' '.join(params)
 
-                resp = await Stats.find_steam_id(s, player)
+                resp = await Stats.find_player_id(s, player)
                 if not resp:
                     return "Player not found"
 
@@ -50,7 +50,7 @@ class StatsCmd(CmdContainer):
                     return 'Для использования команды без ника необходимо выполнить команду:\n /reg твой_стим_id\n ' \
                            'Без регистрации steam_id использование команды возможно только с указанием ника '
 
-            ratings = await Stats.rating_by_id(s, steam_id)
+            ratings = await Stats.rating_by_id(s, steam_id, '')
             return f'{name} {ratings}'
 
     async def match(self, params):
@@ -58,7 +58,7 @@ class StatsCmd(CmdContainer):
             if params:
                 player = ' '.join(params)
 
-                resp = await Stats.find_steam_id(s, player)
+                resp = await Stats.find_player_id(s, player)
                 print(resp)
                 if not resp:
                     return "Player not found"

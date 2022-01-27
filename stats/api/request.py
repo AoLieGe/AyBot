@@ -16,19 +16,26 @@ class StatsRequest:
 
         return await get_response(session, url, params)
 
+
+    "https://aoe2.net/api/player/ratinghistory?game=aoe2de&leaderboard_id=3&start=0&count=1&profile_id=6082789"
     @staticmethod
-    async def rating(session, steam_id: str, leaderboard_id: LeaderboardID):
+    async def rating(session, steam_id: str, profile_id: str, leaderboard_id: LeaderboardID):
         url = "https://aoe2.net/api/player/ratinghistory"
         params = {
             'game': 'aoe2de',
             'leaderboard_id': f'{leaderboard_id}',
             'start': '0',
-            'count': '1',
-            'steam_id': steam_id
+            'count': '1'
         }
+
+        if steam_id != '':
+            params['steam_id'] = steam_id
+        if profile_id != '':
+            params['steam_id'] = steam_id
 
         return await get_response(session, url, params)
 
+    "https://aoe2.net/api/player/lastmatch?game=aoe2de&steam_id=76561198379389049"
     @staticmethod
     async def match(session, steam_id: str):
         url = "https://aoe2.net/api/player/lastmatch"

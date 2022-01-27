@@ -17,7 +17,7 @@ class StatsParser:
             return ''
 
     @staticmethod
-    async def find_steam_id(session: aiohttp.ClientSession, name: str) -> tuple:
+    async def find_player_id(session: aiohttp.ClientSession, name: str) -> tuple:
         """return (name, steam_id) for founded player or None if not"""
         tasks = [StatsParser._find_player(session, name, lb.value) for lb in LeaderboardID]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
@@ -30,12 +30,12 @@ class StatsParser:
             return max_counts(not_full_match)
 
     @staticmethod
-    async def rating_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
+    async def rating_by_id(session: aiohttp.ClientSession, steam_id: str, profile_id: str) -> str:
         leaderboards = [lb.name for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
-        if not steam_id or steam_id == '':
+        if (not steam_id or steam_id == '') and (not profile_id or profile_id == ''):
             return ' '.join([f'{lb}:----' for lb in leaderboards])
 
-        tasks = [Api.rating(session, steam_id, leaderboard_id=lb.value)
+        tasks = [Api.rating(session, steam_id, profile_id, leaderboard_id=lb.value)
                  for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
@@ -51,8 +51,10 @@ class StatsParser:
         try:
             data = json.loads(resp)
             players_data = data['last_match']['players']
+            print(players_data)
             sorted_by_team = [p for p in sorted(players_data, key=lambda item: item['team'])]
-            rates = [await StatsParser.rating_by_id(session, data['steam_id']) for data in sorted_by_team]
+            rates = [await StatsParser.rating_by_id(session, data['steam_id'], data['profile_id'])
+                     for data in sorted_by_team]
             return '\n'.join([f"{format_team(d['team'])}: {d['name']} {r}" for r, d in zip(rates, sorted_by_team)])
         except ValueError:
             return 'Match parse error: incorrect match json'
@@ -84,5 +86,6 @@ class StatsParser:
         return {
             'full_match': full_match,
             'name': result['name'],
-            'steam_id': result['steam_id']
+            'steam_id': result['steam_id'],
+            'profile_id': result['profile_id']
         }
