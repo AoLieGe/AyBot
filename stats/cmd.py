@@ -59,7 +59,6 @@ class StatsCmd(CmdContainer):
                 player = ' '.join(params)
 
                 resp = await Stats.find_player_id(s, player)
-                print(resp)
                 if not resp:
                     return "Player not found"
 
@@ -101,11 +100,8 @@ class StatsCmd(CmdContainer):
         async with aiohttp.ClientSession() as s:
             for player in sdg:
                 steam_id, last_rank, last_delta, last_time = player
-                print(player)
                 name = await Stats.find_name_by_id(s, steam_id)
-                print(name)
                 code, resp = await Api.rating(s, steam_id, LeaderboardID.S.value)
-                print(resp)
                 if code != 200:
                     continue
 
@@ -118,7 +114,6 @@ class StatsCmd(CmdContainer):
                 cur_delta = rank - last_rank
                 text = f'{name} Rank:{rank} Delta:{cur_delta}'
                 info.append(text)
-                print(text)
         return info
 
     def _get_user_steam(self):
