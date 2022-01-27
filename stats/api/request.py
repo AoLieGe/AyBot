@@ -28,6 +28,9 @@ class StatsRequest:
             'count': '1'
         }
 
+        print(steam_id)
+        print(profile_id)
+
         if steam_id and steam_id != '':
             params['steam_id'] = steam_id
         if profile_id and profile_id != '':
