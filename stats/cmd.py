@@ -23,6 +23,7 @@ class StatsCmd(CmdContainer):
 
         self._commands = {
             '/rank': (self.rank, 0),
+            '/rank2': (self.rank, 0),
             '/match': (self.match, 0),
             '/reg': (self.reg, 1),
             '/unreg': (self.unreg, 0),
