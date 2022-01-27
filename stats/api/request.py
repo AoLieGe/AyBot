@@ -30,7 +30,7 @@ class StatsRequest:
 
         if steam_id and steam_id != '':
             params['steam_id'] = steam_id
-        if steam_id and profile_id != '':
+        if profile_id and profile_id != '':
             params['profile_id'] = steam_id
 
         return await get_response(session, url, params)
