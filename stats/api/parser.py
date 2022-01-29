@@ -54,7 +54,7 @@ class StatsParser:
             timestamp = data['last_match']['opened']
             players_data = data['last_match']['players']
             time = datetime.fromtimestamp(timestamp)
-            time_str = time.strftime("Started: %d.%m.%Y %H:%M:%S\n")
+            time_str = time.strftime("Started: %d.%m.%Y %H:%M:%S UTC+0\n")
             sorted_by_team = [p for p in sorted(players_data, key=lambda item: item['team'])]
             rates = [await StatsParser.rating_by_id(session, data['steam_id'], data['profile_id'])
                      for data in sorted_by_team]
