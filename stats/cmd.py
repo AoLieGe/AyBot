@@ -103,7 +103,7 @@ class StatsCmd(CmdContainer):
         print(sdg)
         info = []
         async with aiohttp.ClientSession() as s:
-            names = [Stats.find_name_by_id(s, steam_id) for player in sdg for steam_id, _ in player]
+            names = [Stats.find_name_by_id(s, player[0]) for player in sdg]
             print(names)
             rates = [Api.rating(s, steam_id, '', leaderboard_id=LeaderboardID.S.value)
                      for steam_id in sdg]
