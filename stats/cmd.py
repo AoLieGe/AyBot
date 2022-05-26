@@ -1,6 +1,7 @@
 import time
 
 import aiohttp
+import asyncio
 import requests
 from commands.container import CmdContainer
 from db.api.rank import RankApi
@@ -99,12 +100,22 @@ class StatsCmd(CmdContainer):
 
     async def sdg(self, params):
         sdg = self.db.fetchall(SdgApi.get_users())
-        return sdg
-        
+
         info = []
         async with aiohttp.ClientSession() as s:
-            for player in sdg:
-                steam_id, last_rank, last_delta, last_time = player
+            names = [Stats.find_name_by_id(s, steam_id) for steam_id in sdg]
+            rates = [Api.rating(s, steam_id, '', leaderboard_id=LeaderboardID.S.value)
+                     for steam_id in sdg]
+            tasks = [item for sub_list in zip(names, rates) for item in sub_list]
+            resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
+            json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
+
+            data = yield json_data[i:i+2] for i in range(0, len(json_data), 2)
+
+
+
+
+            for steam_id in sdg:
                 name = await Stats.find_name_by_id(s, steam_id)
                 code, resp = await Api.rating(s, steam_id, LeaderboardID.S.value)
                 if code != 200:
