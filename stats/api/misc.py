@@ -28,6 +28,10 @@ def max_counts(players: list) -> tuple:
     return sort_by_counts[0]['name'], sort_by_counts[0]['steam_id']
 
 
+def streak(num: str) -> str:
+    return f'+{num}' if int(num) > 0 else f'{num}'
+
+
 class LeaderboardID(enum.Enum):
     S = 3  # SOLO
     TG = 4  # TG
