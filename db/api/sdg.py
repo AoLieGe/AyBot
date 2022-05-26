@@ -20,7 +20,7 @@ class SdgApi:
     @staticmethod
     def add_user(steam_id):
         return f"""INSERT INTO {SdgApi.table_name} 
-        steam_id 
+        (steam_id) 
         VALUES ({steam_id})
         ON CONFLICT (steam_id) DO NOTHING
         ;"""
