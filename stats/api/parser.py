@@ -40,9 +40,10 @@ class StatsParser:
                  for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
-        rates = [data['rating'] if data != {} else '----' for data in json_data]
-        result = [f'{lb}:{r}' for lb, r in zip(leaderboards, rates)]
-        return ' '.join(result)
+        rates = [(data['rating'], data['num_wins'], data['num_losses'], data['streak'])
+                 if data != {} else '----' for data in json_data]
+        result = [f'{lb}:R{r[0]} W{r[1]} L{r[2]} ST{r[3]}' for lb, r in zip(leaderboards, rates)]
+        return ' | '.join(result)
 
     @staticmethod
     async def match_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
