@@ -35,7 +35,7 @@ def streak(num: str) -> str:
 def winrate(wins: str, losses: str) -> str:
     wins = int(wins)
     losses = int(losses)
-    rate = wins / (wins + losses)
+    rate = round(100 * wins / (wins + losses))
     print(rate)
     return f'{rate}'
 
