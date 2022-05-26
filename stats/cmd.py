@@ -108,6 +108,7 @@ class StatsCmd(CmdContainer):
 
             tasks = names + rates
             resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
+            print(len(resp))
             resp_names = resp[0:len(resp)/2]
             resp_rates = resp[len(resp)/2:len(resp)]
             print(resp_names)
