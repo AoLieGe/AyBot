@@ -114,7 +114,7 @@ class StatsCmd(CmdContainer):
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in rates]
             rates = [data['rating'] if data != {} else '----' for data in json_data]
             result = [f'{name}: {rate}' for name, rate in zip(names, rates)]
-            return '/n'.join(result)
+            return '\n'.join(result)
             # pairs = [json_data[i:i+2] for i in range(0, len(json_data), 2)]
             # X = [ if data != {} else '----' for name, data in pairs]
 
