@@ -108,8 +108,8 @@ class StatsCmd(CmdContainer):
 
             tasks = names + rates
             resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
-            resp_names = resp[:len(resp)/2]
-            resp_rates = resp[len(resp)/2:]
+            resp_names = resp[0:len(resp)/2]
+            resp_rates = resp[len(resp)/2:len(resp)]
             print(resp_names)
             print(resp_rates)
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
