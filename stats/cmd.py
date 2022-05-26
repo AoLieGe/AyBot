@@ -100,17 +100,18 @@ class StatsCmd(CmdContainer):
 
     async def sdg(self, params):
         sdg = self.db.fetchall(SdgApi.get_users())
-        print(sdg)
         info = []
         async with aiohttp.ClientSession() as s:
             names = [Stats.find_name_by_id(s, player[0]) for player in sdg]
-            print(names)
             rates = [Api.rating(s, steam_id, '', leaderboard_id=LeaderboardID.S.value)
                      for steam_id in sdg]
-            print(rates)
-            tasks = [item for sub_list in zip(names, rates) for item in sub_list]
+
+            tasks = names + rates
             resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
-            print(resp)
+            resp_names = resp[:len(resp)/2]
+            resp_rates = resp[len(resp)/2:]
+            print(resp_names)
+            print(resp_rates)
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
             print(json_data)
             # pairs = [json_data[i:i+2] for i in range(0, len(json_data), 2)]
