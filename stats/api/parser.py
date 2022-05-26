@@ -42,7 +42,7 @@ class StatsParser:
         json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
         rates = [(data['rating'], data['num_wins'], data['num_losses'], data['streak'])
                  if data != {} else '----' for data in json_data]
-        result = [f'{lb}:R{r[0]} W{r[1]} L{r[2]} ST{r[3]}' for lb, r in zip(leaderboards, rates)]
+        result = [f'{lb}:{r[0]} {r[1]}:{r[2]} {r[3]}' for lb, r in zip(leaderboards, rates)]
         return ' | '.join(result)
 
     @staticmethod
