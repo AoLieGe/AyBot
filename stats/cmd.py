@@ -103,7 +103,7 @@ class StatsCmd(CmdContainer):
         print(sdg)
         info = []
         async with aiohttp.ClientSession() as s:
-            names = [Stats.find_name_by_id(s, steam_id) for steam_id in sdg]
+            names = [Stats.find_name_by_id(s, steam_id) for player in sdg for steam_id, _ in player]
             print(names)
             rates = [Api.rating(s, steam_id, '', leaderboard_id=LeaderboardID.S.value)
                      for steam_id in sdg]
@@ -126,6 +126,7 @@ class StatsCmd(CmdContainer):
 
     async def sdg_drop(self, params):
         self.db.execute(SdgApi.drop_table())
+        self.db.execute(SdgApi.create_table())
 
     def _get_user_steam(self):
         user = self.msg.author.id
