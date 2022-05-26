@@ -5,10 +5,7 @@ class SdgApi:
     def create_table():
         return f"""CREATE TABLE IF NOT EXISTS {SdgApi.table_name} 
         (
-        steam_id    bigint NOT NULL PRIMARY KEY,
-        rate        int NOT NULL,
-        delta       int,
-        time        bigint
+        steam_id    bigint NOT NULL PRIMARY KEY
         );
         """
 
@@ -21,27 +18,16 @@ class SdgApi:
         return f"DELETE FROM {SdgApi.table_name};"
 
     @staticmethod
-    def add_user(steam_id, rate, delta, time):
+    def add_user(steam_id):
         return f"""INSERT INTO {SdgApi.table_name} 
-        (steam_id, rate, delta, time) 
-        VALUES ({steam_id}, {rate}, {delta}, {time})
+        (steam_id) 
+        VALUES ({steam_id})
         ON CONFLICT (steam_id) DO NOTHING
         ;"""
 
     @staticmethod
-    def update_user(steam_id, rate, delta, time):
-        return f"""UPDATE {SdgApi.table_name}
-                SET rate = {rate}, delta = {delta}, time = {time}
-                WHERE steam_id = '{steam_id}'
-                ;"""
-
-    @staticmethod
     def del_user(steam_id):
         return f"DELETE FROM {SdgApi.table_name} WHERE steam_id = {steam_id};"
-
-    @staticmethod
-    def get_user(steam_id):
-        return f"SELECT * FROM {SdgApi.table_name} WHERE steam_id = {steam_id};"
 
     @staticmethod
     def get_users():

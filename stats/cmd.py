@@ -17,8 +17,8 @@ class StatsCmd(CmdContainer):
         self.db = db
         self.db.execute(RankApi.create_table())
         self.db.execute(SdgApi.create_table())
-        tm = int(time.mktime(time.struct_time((2022, 1, 1, 0, 0, 0, 5, 1, -1))))
-        self.db.execute(SdgApi.add_user(76561198131951866, 1063, 0, tm))
+        #tm = int(time.mktime(time.struct_time((2022, 1, 1, 0, 0, 0, 5, 1, -1))))
+        #self.db.execute(SdgApi.add_user(76561198131951866, 1063, 0, tm))
         self.bo99_parser = MatchParser('[SDG]Колясик', 3574406)
 
         self._commands = {
@@ -28,7 +28,10 @@ class StatsCmd(CmdContainer):
             '/reg': (self.reg, 1),
             '/unreg': (self.unreg, 0),
             '/бо99': (self.bo99, 1),
-            '/sdg': (self.sdg, 0)
+            '/sdg': (self.sdg, 0),
+            '/sdgadd': (self.sdg_add, 1),
+            '/sdgdel': (self.sdg_del, 1),
+            '/sdgdrop': (self.sdg_drop, 0)
         }
 
     async def rank(self, params):
@@ -97,6 +100,7 @@ class StatsCmd(CmdContainer):
     async def sdg(self, params):
         sdg = self.db.fetchall(SdgApi.get_users())
         return sdg
+        
         info = []
         async with aiohttp.ClientSession() as s:
             for player in sdg:
@@ -116,6 +120,17 @@ class StatsCmd(CmdContainer):
                 text = f'{name} Rank:{rank} Delta:{cur_delta}'
                 info.append(text)
         return info
+
+    async def sdg_add(self, params):
+        for member in params:
+            self.db.execute(SdgApi.add_user(member))
+
+    async def sdg_del(self, params):
+        for member in params:
+            self.db.execute(SdgApi.del_user(member))
+
+    async def sdg_drop(self, params):
+        self.db.execute(SdgApi.drop_table())
 
     def _get_user_steam(self):
         user = self.msg.author.id
