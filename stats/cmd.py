@@ -110,6 +110,7 @@ class StatsCmd(CmdContainer):
             print(rates)
             tasks = [item for sub_list in zip(names, rates) for item in sub_list]
             resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
+            print(resp)
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
             print(json_data)
             # pairs = [json_data[i:i+2] for i in range(0, len(json_data), 2)]
