@@ -109,15 +109,14 @@ class StatsCmd(CmdContainer):
             tasks = names + rates
             resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
 
-            resp_names = resp[:int(len(resp)/2)]
-            resp_rates = resp[int(len(resp)/2):]
-            print(resp_names)
-            print(resp_rates)
-            json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
-            print(json_data)
+            names = resp[:int(len(resp)/2)]
+            rates = resp[int(len(resp)/2):]
+            json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in rates]
+            rates = [data['rating'] if data != {} else '----' for data in json_data]
+            result = [f'{name}: {rate}' for name, rate in zip(names, rates)]
+            return '/n'.join(result)
             # pairs = [json_data[i:i+2] for i in range(0, len(json_data), 2)]
             # X = [ if data != {} else '----' for name, data in pairs]
-        return json_data
 
     async def sdg_add(self, params):
         for member in params:
