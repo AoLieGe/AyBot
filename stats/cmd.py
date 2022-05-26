@@ -113,8 +113,8 @@ class StatsCmd(CmdContainer):
             rates = resp[int(len(resp)/2):]
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in rates]
             rates = [data['rating'] if data != {} else '----' for data in json_data]
-            result = [f'{i}) {name}: {rate}' for i, name, rate in
-                      enumerate(sorted(zip(names, rates), key=lambda val: val[1], reverse=True))]
+            result = [f'{name}: {rate}' for name, rate in
+                      sorted(zip(names, rates), key=lambda val: val[1], reverse=True)]
             return '\n'.join(result)
 
     async def sdg_add(self, params):
