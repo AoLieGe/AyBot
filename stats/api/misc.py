@@ -32,6 +32,14 @@ def streak(num: str) -> str:
     return f'+{num}' if int(num) > 0 else f'{num}'
 
 
+def winrate(wins: str, losses: str) -> str:
+    wins = int(wins)
+    losses = int(losses)
+    rate = wins / (wins + losses)
+    print(rate)
+    return f'{rate}'
+
+
 class LeaderboardID(enum.Enum):
     S = 3  # SOLO
     TG = 4  # TG
