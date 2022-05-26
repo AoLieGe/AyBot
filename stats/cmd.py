@@ -96,7 +96,7 @@ class StatsCmd(CmdContainer):
 
     async def sdg(self, params):
         sdg = self.db.fetchall(SdgApi.get_users())
-
+        return sdg
         info = []
         async with aiohttp.ClientSession() as s:
             for player in sdg:
