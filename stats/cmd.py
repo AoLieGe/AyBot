@@ -18,8 +18,8 @@ class StatsCmd(CmdContainer):
         self.db = db
         self.db.execute(RankApi.create_table())
         self.db.execute(SdgApi.create_table())
-        #tm = int(time.mktime(time.struct_time((2022, 1, 1, 0, 0, 0, 5, 1, -1))))
-        #self.db.execute(SdgApi.add_user(76561198131951866, 1063, 0, tm))
+        # tm = int(time.mktime(time.struct_time((2022, 1, 1, 0, 0, 0, 5, 1, -1))))
+        # self.db.execute(SdgApi.add_user(76561198131951866, 1063, 0, tm))
         self.bo99_parser = MatchParser('[SDG]Колясик', 3574406)
 
         self._commands = {
@@ -109,28 +109,10 @@ class StatsCmd(CmdContainer):
             tasks = [item for sub_list in zip(names, rates) for item in sub_list]
             resp = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in resp]
-
-            data = yield json_data[i:i+2] for i in range(0, len(json_data), 2)
-
-
-
-
-            for steam_id in sdg:
-                name = await Stats.find_name_by_id(s, steam_id)
-                code, resp = await Api.rating(s, steam_id, LeaderboardID.S.value)
-                if code != 200:
-                    continue
-
-                data = to_json(formatted(resp))
-                if not data:
-                    continue
-
-                rank = data['rating']
-                cur_time = time.time()
-                cur_delta = rank - last_rank
-                text = f'{name} Rank:{rank} Delta:{cur_delta}'
-                info.append(text)
-        return info
+            print(json_data)
+            # pairs = [json_data[i:i+2] for i in range(0, len(json_data), 2)]
+            # X = [ if data != {} else '----' for name, data in pairs]
+        return json_data
 
     async def sdg_add(self, params):
         for member in params:
