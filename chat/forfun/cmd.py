@@ -11,8 +11,12 @@ class ChatCmd(CmdContainer):
             '/лучший': (self.best_male, 0),
             '/лучшая': (self.best_female, 0),
             '/best': (self.best_test, 0),
-            '/zloy': (self.zloy, 0)
+            '/zloy': (self.zloy, 0),
+            '/франки': (self.franks, 0)
         }
+        
+    async def franks(self, params):
+        return 'Чел, это мейнстрим, лучше сыграй ЦА'
 
     async def zloy(self, params):
         return 'Чую запах новой псины. Кажется, пора ливать'
