@@ -111,8 +111,12 @@ class StatsCmd(CmdContainer):
 
             names = resp[:int(len(resp)/2)]
             rates = resp[int(len(resp)/2):]
+            print(names)
+            print(rates)
             json_data = [to_json(formatted(d)) if s == 200 else {} for s, d in rates]
+            print(json_data)
             rates = [data['rating'] if data != {} else '----' for data in json_data]
+            print(rates)
             result = [f'{name}: {rate}' for name, rate in
                       sorted(zip(names, rates), key=lambda val: val[1], reverse=True)]
             return '\n'.join(result)
