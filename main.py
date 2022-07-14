@@ -1,5 +1,6 @@
 import os
 import discord
+import logging
 from stream.sub.provider import SubscriptionProvider
 from stream.twitch.checker import Checker
 from stream.cmd import StreamCmd
@@ -10,6 +11,7 @@ from chat.forfun.cmd import ChatCmd
 from chat.moderate.cmd import ModerateCmd
 from db.provider import DBProvider
 
+logging.basicConfig(level=logging.DEBUG)
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # get discord token from
 TWITCH_ID = os.getenv("TWITCH_ID")  # get twitch token from
