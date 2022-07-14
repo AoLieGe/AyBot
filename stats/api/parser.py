@@ -74,8 +74,8 @@ class StatsParser:
 
             return result
         except ValueError:
-            pass
-        return ""
+            return 'Match parse error: incorrect match json'
+
 
         # status, resp = await Api.match(session, steam_id)
         # if status != 200:
