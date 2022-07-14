@@ -26,7 +26,8 @@ def convert_rank(leaderboard: str, status: int, data: str) -> str:
             data = json.loads(data)
             logging.debug(f'convert_rank: unpacked data to json: {data}')
             winrate = calc_winrate(data['num_wins'], data['num_losses'])
-            result = f"{leaderboard}:{data['rating']} {winrate}% {data['streak']}"
+            streak = calc_streak(data['streak'])
+            result = f"{leaderboard}:{data['rating']} {winrate}% {streak}"
             logging.debug(f'convert_rank: SUCCESS     result: {result}')
             return result
 
@@ -77,7 +78,7 @@ def max_counts(players: list) -> tuple:
     return sort_by_counts[0]['name'], sort_by_counts[0]['steam_id']
 
 
-def streak(num: str) -> str:
+def calc_streak(num: str) -> str:
     return f'+{num}' if int(num) > 0 else f'{num}'
 
 
