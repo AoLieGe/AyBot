@@ -1,6 +1,6 @@
 import asyncio
 import aiohttp
-from datetime import datetime
+import logging
 
 import stats.api.misc
 from stats.api.request import StatsRequest as Api
@@ -34,10 +34,12 @@ class StatsParser:
 
     @staticmethod
     async def rating_by_id(session: aiohttp.ClientSession, steam_id: str, profile_id: str) -> str:
+        logging.debug(f"StatsParser.rating_by_id: CALLED     steam_id:{steam_id} profile_id:{profile_id}")
         leaderboards = [lb for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
         tasks = [Api.rating(session, steam_id, profile_id, lb.value) for lb in leaderboards]
         ranks_raw = await asyncio.gather(*[asyncio.create_task(t) for t in tasks])
         ranks = [convert_rank(lb.name, status, data) for lb, (status, data) in zip(leaderboards, ranks_raw)]
+        logging.info(f"StatsParser.rating_by_id: SUCCESS     result: {ranks}")
         return ' | '.join(ranks)
 
         # leaderboards = [lb.name for lb in LeaderboardID if lb != LeaderboardID.UNRANKED]
@@ -56,9 +58,10 @@ class StatsParser:
 
     @staticmethod
     async def match_by_id(session: aiohttp.ClientSession, steam_id: str) -> str:
+        logging.debug(f"StatsParser.match_by_id: CALLED     steam_id:{steam_id}")
         status, resp = await Api.match(session, steam_id)
         if status != 200:
-
+            logging.warning(f"StatsParser.match_by_id: WARNING     match request return status:{status}")
             return f'Error: Request return status {status}'
         try:
             data = json.loads(resp)
@@ -71,9 +74,10 @@ class StatsParser:
             match = [format_match_player(data, rank) for data, rank in zip(players_data, ranks)]
             # build result with timestamp and players rank info
             result = time + '\n'.join(match)
-
+            logging.info(f"StatsParser.match_by_id: SUCCESS     result: {result}")
             return result
         except ValueError:
+            logging.exception(f"StatsParser.match_by_id: conversion raise exception")
             return 'Match parse error: incorrect match json'
 
 
