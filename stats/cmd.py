@@ -138,7 +138,8 @@ class StatsCmd(CmdContainer):
     async def _get_clan_stats(self, table):
         users = self.db.fetchall(table.get_users())
         info = []
-        async with aiohttp.ClientSession() as s:
+        connector = aiohttp.TCPConnector(limit_per_host=10)
+        async with aiohttp.ClientSession(connector=connector) as s:
             names = [Stats.find_name_by_id(s, player[0]) for player in users]
             rates = [Api.rating(s, steam_id, '', leaderboard_id=LeaderboardID.S.value)
                      for steam_id in users]
