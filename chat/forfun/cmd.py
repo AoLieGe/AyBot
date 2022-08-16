@@ -25,21 +25,21 @@ class ChatCmd(CmdContainer):
         name = 'Boy'
         if params:
             name = params[0]
-
+        await message.delete()
         return f"{name}, ты лучший!"
 
     async def best_female(self, params):
         name = 'Детка'
         if params:
             name = params[0]
-
+        await message.delete()
         return f"{name}, ты лучшая!"
 
     async def best_test(self, params):
         name = 'Boy'
         if params:
             name = params[0]
-
+        await message.delete()
         return f"{name}, ты лучший!"
 
 
