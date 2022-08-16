@@ -10,6 +10,7 @@ class ChatCmd(CmdContainer):
             '/Лучшая': (self.best_female, 0),
             '/лучший': (self.best_male, 0),
             '/лучшая': (self.best_female, 0),
+            '/пнх': (self.nah, 0),
             '/best': (self.best_test, 0),
             '/zloy': (self.zloy, 0),
             '/франки': (self.franks, 0)
@@ -27,6 +28,12 @@ class ChatCmd(CmdContainer):
             name = params[0]
         await self.msg.delete()
         return f"{name}, ты лучший!"
+
+    async def nah(self, param):
+        if param:
+            name = param[0]
+        await self.msg.delete()
+        return f"{name}, пнх, псина!"
 
     async def best_female(self, params):
         name = 'Детка'
