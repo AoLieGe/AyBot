@@ -42,7 +42,7 @@ def format_time(timestamp: int) -> str:
     time = datetime.fromtimestamp(timestamp)
     delta = timedelta(hours=3)
     time += delta
-    return time.strftime("Started: %d.%m.%Y %H:%M:%S msk")
+    return time.strftime("Started: %d.%m.%Y %H:%M мск\n")
 
 
 def format_match_player(data: dict, rank) -> str:
