@@ -1,7 +1,7 @@
 import enum
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def remove_brackets(resp: str) -> str:
@@ -40,7 +40,9 @@ def convert_rank(leaderboard: str, status: int, data: str) -> str:
 
 def format_time(timestamp: int) -> str:
     time = datetime.fromtimestamp(timestamp)
-    return time.strftime("Started: %d.%m.%Y %H:%M:%S UTC+0\n")
+    delta = timedelta(hours=3)
+    time += delta
+    return time.strftime("Started: %d.%m.%Y %H:%M:%S msk")
 
 
 def format_match_player(data: dict, rank) -> str:
