@@ -19,7 +19,7 @@ class ModerateCmd(CmdContainer):
         if guild != self.guild:
             return
         
-        if channel == '822903067233878016'
+        if channel == '822903067233878016':
             return
 
         if user == self.admin:
